@@ -15,8 +15,7 @@ model User {
     id           Int      @id @default(autoincrement())
     occupies     Room?
     name         String
-    genderId     Int
-    gender       Gender   @relation(fields: [genderId], references: [int])
+    gender       Gender
     points       Int
     matricNumber String
     phoneNumber  String?
@@ -25,20 +24,29 @@ model User {
 }
 
 model Room {
-    id         Int      @id @default(autoincrement())
-    occupant   User?    @relation(fields: [occupantId], references: [id])
-    occupantId Int?     @unique
-    name       String
-    genderId   Int
-    gender     Gender   @relation(fields: [genderId], references: [int])
+    id         String   @id
+    block      Block
+    unit       Int
+    gender     Gender
     isDouble   Boolean? @default(false)
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
+    occupant   User?    @relation(fields: [occupantId], references: [id])
+    occupantId Int?     @unique
 }
 
-model Gender {
-    int         Int    @id @default(autoincrement())
-    description String
-    Room        Room[]
-    User        User[]
+enum Gender {
+    Male
+    Female
+}
+
+enum Block {
+    B2
+    B3
+    B3A
+    B4
+    B5
+    B6
+    B7
+    B8
 }
