@@ -17,7 +17,8 @@ model User {
     name         String
     gender       Gender
     points       Int
-    matricNumber String
+    matricNumber String?
+    nusNetId     String
     phoneNumber  String?
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
