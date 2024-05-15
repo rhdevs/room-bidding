@@ -7,12 +7,16 @@ import { useSearchParams } from "next/navigation";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const URLparams = useSearchParams();
-
   const userhash = URLparams.get("id") ?? "User not Signed In";
+
+  const { data, isLoading } = api.user.getUserByHash.useQuery(userhash);
+  if (isLoading) return <div>Loading...</div>;
+
+  console.log(data);
   return (
     <>
       <Navbar />
-      {userhash}
+      {JSON.stringify(data)}
       <Component {...pageProps} />
       <Toaster />
     </>
