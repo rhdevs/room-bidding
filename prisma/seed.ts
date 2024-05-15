@@ -18,7 +18,7 @@ const rooms = [
 
 const processedRooms = rooms.map((x) => {
   return {
-    id: generateUUID(x.block, x.unit.toString()),
+    id: generateUUID(x.block, x.unit),
     block: x.block,
     unit: x.unit,
     gender: x.gender,
