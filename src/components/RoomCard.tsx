@@ -2,41 +2,64 @@ import { RouterOutputs } from "~/utils/api";
 import { Button } from "~/components/ui/button";
 import BidModal from "./BidModal";
 import { useState } from "react";
+import { Block } from "@prisma/client";
+import { generateUUID } from "~/utils/uuid";
 type Room = RouterOutputs["room"]["getRoom"];
 
 type RoomCardProps = {
-  roomNumber: string;
-  rooms: Room[] | undefined;
+  block: Block;
+  unit: number;
+  roomset: Map<string, Room>;
 };
 
-const getRoomType = (room: Room) => {
-  if (room == null) {
-    return "Unknown";
-  }
-  let result = "";
-  result += room?.genderId == 1 ? "M" : "F";
-  result += room?.isDouble ? "D" : "S";
-  return result;
+// const getRoomType = (room: Room) => {
+//   if (room == null) {
+//     return "Unknown";
+//   }
+//   let result = "";
+//   result += room?.genderId == 1 ? "M" : "F";
+//   result += room?.isDouble ? "D" : "S";
+//   return result;
+// };
+//
+export const getString = (room: Room) => {
+  return `${room?.block.substring(1, 2)}-${room?.unit}`;
 };
 
-export default function RoomCard({ roomNumber, rooms }: RoomCardProps) {
+export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const room = rooms?.find((room) => room?.name === roomNumber) || null;
+  let room = roomset.get(generateUUID(block, unit)) as Room;
+
+  if (room == null) {
+    room = {
+      id: "123123123",
+      block: block,
+      unit: unit,
+      gender: "Male",
+      isDouble: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      occupantId: 0,
+    };
+  }
+
+  // const room = rooms?.find((room) => room?.name === roomNumber) || null;
   return (
     <BidModal
       room={room}
       isDialogOpen={isDialogOpen}
       setIsDialogOpen={setIsDialogOpen}
-      key={roomNumber}
+      key={room?.id}
     >
       <Button
         className="flex h-16 min-h-[64px] w-20 min-w-[80px] flex-col px-2 py-1 text-xs"
-        disabled={room?.occupant ? true : false}
+        // disabled={room?.occupant ? true : false}
         onClick={() => setIsDialogOpen(true)}
       >
-        <span className="text-sm">{roomNumber}</span>
-        <span>{getRoomType(room)}</span>
-        <span className="font-bold">{room?.occupant?.name}</span>
+        <span className="text-sm">{getString(room)}</span>
+        {/* <span>{room?.gender}</span> */}
+        <span>Male</span>
+        {/* <span className="font-bold">{room?.occupant?.name}</span> */}
       </Button>
     </BidModal>
   );

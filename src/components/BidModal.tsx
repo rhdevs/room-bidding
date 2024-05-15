@@ -14,6 +14,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { api, RouterOutputs } from "~/utils/api";
 import { toast } from "react-hot-toast";
+import { getString } from "./RoomCard";
 
 type Room = RouterOutputs["room"]["getRoom"];
 
@@ -100,7 +101,7 @@ const BidModal: React.FC<BidModalProps> = ({
         onCloseAutoFocus={() => setIsDialogOpen(false)}
       >
         <DialogHeader onClick={() => setIsDialogOpen(false)}>
-          <DialogTitle>{`Bid for room ${room?.name}`}</DialogTitle>
+          <DialogTitle>{`Bid for room ${getString(room)}`}</DialogTitle>
           <DialogDescription>
             Are you sure you want to bid for this room?
           </DialogDescription>

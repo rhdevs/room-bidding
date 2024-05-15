@@ -8,6 +8,7 @@ import LevelCard from "./LevelCard";
 import Toilet from "./Toilet";
 import Pantry from "./Pantry";
 import Stairs from "./Stairs";
+import { generateUUID } from "~/utils/uuid";
 type Room = RouterOutputs["room"]["getRoom"];
 
 const Male = {
@@ -18,85 +19,30 @@ const Female = {
   int: 2,
   description: "Female",
 };
-const Alice = {
-  id: 1,
-  name: "Alice",
-  genderId: 2,
-  points: 100,
-  createdAt: new Date(2020, 12, 10),
-  updatedAt: new Date(2020, 12, 11),
-};
 
-const Bob = {
-  id: 2,
-  name: "Bob",
-  genderId: 1,
-  points: 132,
-  createdAt: new Date(2020, 12, 10),
-  updatedAt: new Date(2020, 12, 11),
-};
-const Charlie = {
-  id: 3,
-  name: "Charlie",
-  genderId: 1,
-  points: 130,
-  createdAt: new Date(2020, 12, 10),
-  updatedAt: new Date(2020, 12, 11),
-};
-const David = {
-  id: 4,
-  name: "David",
-  genderId: 1,
-  points: 201,
-  createdAt: new Date(2020, 12, 10),
-  updatedAt: new Date(2020, 12, 11),
-};
-
-const Eddy = {
-  id: 5,
-  name: "Eddy",
-  genderId: 1,
-  points: 55,
-  createdAt: new Date(2020, 12, 10),
-  updatedAt: new Date(2020, 12, 11),
-};
-
-const room7 = {
-  id: 7,
-  occupantId: 7,
-  name: "3-107",
-  isDouble: true,
-  createdAt: new Date(2020, 12, 10),
-  updatedAt: new Date(2020, 12, 11),
-  gender: Male,
-  genderId: 2,
-  occupant: null,
-};
-
-const femaleSingle = {
-  id: 8,
-  occupantId: null,
-  name: "3-308",
-  isDouble: false,
-  createdAt: new Date(2020, 12, 10),
-  updatedAt: new Date(2020, 12, 11),
-  gender: Female,
-  genderId: 2,
-  occupant: null,
-};
 const BlockTwo: React.FC = () => {
-  const { data: rooms } = api.room.listRooms.useQuery();
-  console.log(rooms);
+  const { data: rooms } = api.room.listRoomsByBlock.useQuery("B2");
+  //
+  // console.log(rooms);
   // display columns of rooms
+  if (rooms === undefined) {
+    return <div>Loading...</div>;
+  }
+
+  const roomsset = new Map<string, Room>();
+  for (const room of rooms) {
+    roomsset.set(generateUUID(room.block, room.unit), room);
+  }
+
   return (
     <div className="flex gap-x-8 p-4">
       {/* Left column */}
       <div className="flex min-w-max gap-x-4">
         <div className="flex flex-col gap-y-1">
-          <RoomCard rooms={rooms} roomNumber="2-309" />
-          <RoomCard rooms={rooms} roomNumber="2-308" />
-          <RoomCard rooms={rooms} roomNumber="2-307" />
-          <RoomCard rooms={rooms} roomNumber="2-306" />
+          <RoomCard block="B2" unit={309} key={309} roomset={roomsset} />
+          <RoomCard block="B2" unit={308} key={308} roomset={roomsset} />
+          <RoomCard block="B2" unit={307} key={307} roomset={roomsset} />
+          <RoomCard block="B2" unit={306} key={306} roomset={roomsset} />
           <div className="h-full" />
           <LevelCard level="3.5" />
         </div>
@@ -104,18 +50,18 @@ const BlockTwo: React.FC = () => {
           <div className="h-full" />
           <Toilet gender="Male" />
           <Stairs />
-          <RoomCard rooms={rooms} roomNumber="2-305" />
-          <RoomCard rooms={rooms} roomNumber="2-304" />
-          <RoomCard rooms={rooms} roomNumber="2-303" />
-          <RoomCard rooms={rooms} roomNumber="2-302" />
-          <RoomCard rooms={rooms} roomNumber="2-301" />
+          <RoomCard block="B2" unit={305} key={305} roomset={roomsset} />
+          <RoomCard block="B2" unit={304} key={304} roomset={roomsset} />
+          <RoomCard block="B2" unit={303} key={303} roomset={roomsset} />
+          <RoomCard block="B2" unit={302} key={302} roomset={roomsset} />
+          <RoomCard block="B2" unit={301} key={301} roomset={roomsset} />
           <LevelCard level="3" />
         </div>
         <div className="flex flex-col gap-y-1">
-          <RoomCard rooms={rooms} roomNumber="2-209" />
-          <RoomCard rooms={rooms} roomNumber="2-208" />
-          <RoomCard rooms={rooms} roomNumber="2-207" />
-          <RoomCard rooms={rooms} roomNumber="2-206" />
+          <RoomCard block="B2" unit={209} key={209} roomset={roomsset} />
+          <RoomCard block="B2" unit={208} key={208} roomset={roomsset} />
+          <RoomCard block="B2" unit={207} key={207} roomset={roomsset} />
+          <RoomCard block="B2" unit={206} key={206} roomset={roomsset} />
           <div className="h-full" />
           <LevelCard level="2.5" />
         </div>
@@ -124,16 +70,16 @@ const BlockTwo: React.FC = () => {
           <Toilet gender="Female" />
           <Stairs />
           <Pantry className="min-h-[128px]" />
-          <RoomCard rooms={rooms} roomNumber="2-203" />
-          <RoomCard rooms={rooms} roomNumber="2-202" />
-          <RoomCard rooms={rooms} roomNumber="2-201" />
+          <RoomCard block="B2" unit={203} key={203} roomset={roomsset} />
+          <RoomCard block="B2" unit={202} key={202} roomset={roomsset} />
+          <RoomCard block="B2" unit={201} key={201} roomset={roomsset} />
           <LevelCard level="2" />
         </div>
         <div className="flex flex-col gap-y-1">
-          <RoomCard rooms={rooms} roomNumber="2-109" />
-          <RoomCard rooms={rooms} roomNumber="2-108" />
-          <RoomCard rooms={rooms} roomNumber="2-107" />
-          <RoomCard rooms={rooms} roomNumber="2-106" />
+          <RoomCard block="B2" unit={109} key={109} roomset={roomsset} />
+          <RoomCard block="B2" unit={108} key={108} roomset={roomsset} />
+          <RoomCard block="B2" unit={107} key={107} roomset={roomsset} />
+          <RoomCard block="B2" unit={106} key={106} roomset={roomsset} />
           <div className="h-full" />
           <LevelCard level="1.5" />
         </div>
@@ -141,41 +87,41 @@ const BlockTwo: React.FC = () => {
           <div className="h-full" />
           <Toilet gender="Male" />
           <Stairs />
-          <RoomCard rooms={rooms} roomNumber="2-105" />
-          <RoomCard rooms={rooms} roomNumber="2-104" />
-          <RoomCard rooms={rooms} roomNumber="2-103" />
-          <RoomCard rooms={rooms} roomNumber="2-102" />
-          <RoomCard rooms={rooms} roomNumber="2-101" />
+          <RoomCard block="B2" unit={105} key={105} roomset={roomsset} />
+          <RoomCard block="B2" unit={104} key={104} roomset={roomsset} />
+          <RoomCard block="B2" unit={103} key={103} roomset={roomsset} />
+          <RoomCard block="B2" unit={102} key={102} roomset={roomsset} />
+          <RoomCard block="B2" unit={101} key={101} roomset={roomsset} />
           <LevelCard level="1" />
         </div>
       </div>
       {/* Middle Right Half */}
       <div className="flex-col space-y-2">
         <div className="flex gap-x-1">
-          <RoomCard rooms={rooms} roomNumber="2-311" />
-          <RoomCard rooms={rooms} roomNumber="2-312" />
-          <RoomCard rooms={rooms} roomNumber="2-313" />
-          <RoomCard rooms={rooms} roomNumber="2-314" />
-          <RoomCard rooms={rooms} roomNumber="2-315" />
-          <RoomCard rooms={rooms} roomNumber="2-316" />
+          <RoomCard block="B2" unit={311} key={311} roomset={roomsset} />
+          <RoomCard block="B2" unit={312} key={312} roomset={roomsset} />
+          <RoomCard block="B2" unit={313} key={313} roomset={roomsset} />
+          <RoomCard block="B2" unit={314} key={314} roomset={roomsset} />
+          <RoomCard block="B2" unit={315} key={315} roomset={roomsset} />
+          <RoomCard block="B2" unit={316} key={316} roomset={roomsset} />
           <div className="w-full" />
           <LevelCard level="3" className="h-16" />
         </div>
         <div className="flex gap-x-1">
           <div className="w-[500px]" />
-          <RoomCard rooms={rooms} roomNumber="2-317" />
-          <RoomCard rooms={rooms} roomNumber="2-318" />
-          <RoomCard rooms={rooms} roomNumber="2-319" />
-          <RoomCard rooms={rooms} roomNumber="2-320" />
+          <RoomCard block="B2" unit={317} key={317} roomset={roomsset} />
+          <RoomCard block="B2" unit={318} key={318} roomset={roomsset} />
+          <RoomCard block="B2" unit={319} key={319} roomset={roomsset} />
+          <RoomCard block="B2" unit={320} key={320} roomset={roomsset} />
           <LevelCard level="2.5" className="h-16" />
         </div>
         <div className="flex gap-x-1">
-          <RoomCard rooms={rooms} roomNumber="2-211" />
-          <RoomCard rooms={rooms} roomNumber="2-212" />
-          <RoomCard rooms={rooms} roomNumber="2-213" />
-          <RoomCard rooms={rooms} roomNumber="2-214" />
-          <RoomCard rooms={rooms} roomNumber="2-215" />
-          <RoomCard rooms={rooms} roomNumber="2-216" />
+          <RoomCard block="B2" unit={211} key={211} roomset={roomsset} />
+          <RoomCard block="B2" unit={212} key={212} roomset={roomsset} />
+          <RoomCard block="B2" unit={213} key={213} roomset={roomsset} />
+          <RoomCard block="B2" unit={214} key={214} roomset={roomsset} />
+          <RoomCard block="B2" unit={215} key={215} roomset={roomsset} />
+          <RoomCard block="B2" unit={216} key={216} roomset={roomsset} />
           <Stairs className="h-16" />
           <Toilet gender="Female" />
           <div className="w-full" />
@@ -183,19 +129,19 @@ const BlockTwo: React.FC = () => {
         </div>
         <div className="flex gap-x-1">
           <div className="w-[500px]" />
-          <RoomCard rooms={rooms} roomNumber="2-217" />
-          <RoomCard rooms={rooms} roomNumber="2-218" />
-          <RoomCard rooms={rooms} roomNumber="2-219" />
-          <RoomCard rooms={rooms} roomNumber="2-220" />
+          <RoomCard block="B2" unit={217} key={217} roomset={roomsset} />
+          <RoomCard block="B2" unit={218} key={218} roomset={roomsset} />
+          <RoomCard block="B2" unit={219} key={219} roomset={roomsset} />
+          <RoomCard block="B2" unit={220} key={220} roomset={roomsset} />
           <LevelCard level="1.5" className="h-16" />
         </div>
         <div className="flex gap-x-1">
-          <RoomCard rooms={rooms} roomNumber="2-111" />
-          <RoomCard rooms={rooms} roomNumber="2-112" />
-          <RoomCard rooms={rooms} roomNumber="2-113" />
-          <RoomCard rooms={rooms} roomNumber="2-114" />
-          <RoomCard rooms={rooms} roomNumber="2-115" />
-          <RoomCard rooms={rooms} roomNumber="2-116" />
+          <RoomCard block="B2" unit={111} key={111} roomset={roomsset} />
+          <RoomCard block="B2" unit={112} key={112} roomset={roomsset} />
+          <RoomCard block="B2" unit={113} key={113} roomset={roomsset} />
+          <RoomCard block="B2" unit={114} key={114} roomset={roomsset} />
+          <RoomCard block="B2" unit={115} key={115} roomset={roomsset} />
+          <RoomCard block="B2" unit={116} key={116} roomset={roomsset} />
           <Stairs className="h-16" />
           <Toilet gender="Male" />
           <div className="w-full" />
