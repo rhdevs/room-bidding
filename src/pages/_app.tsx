@@ -4,23 +4,29 @@ import { Toaster } from "react-hot-toast";
 import "~/styles/globals.css";
 import Navbar from "~/components/Navbar";
 import { useSearchParams } from "next/navigation";
+import { createContext } from "react";
+import { User } from "@prisma/client";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  const URLparams = useSearchParams();
-  const userhash = URLparams.get("id") ?? "User not Signed In";
+  const { data, isSuccess } = useUser();
 
-  const { data, isLoading } = api.user.getUserByHash.useQuery(userhash);
-  if (isLoading) return <div>Loading...</div>;
+  if (!isSuccess) return <div>Loading...</div>;
 
-  console.log(data);
+  data;
   return (
     <>
       <Navbar />
-      {JSON.stringify(data)}
       <Component {...pageProps} />
       <Toaster />
     </>
   );
 };
+
+export function useUser() {
+  const URLparams = useSearchParams();
+  const userhash = URLparams.get("id") ?? "User not Signed In";
+
+  return api.user.getUserByHash.useQuery(userhash);
+}
 
 export default api.withTRPC(MyApp);
