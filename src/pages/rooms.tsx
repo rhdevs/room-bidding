@@ -8,8 +8,6 @@ export default function Rooms() {
 
   const blocks = ["2", "3", "3A", "4", "5", "6", "7", "8"];
 
-  const { data: rooms } = api.room.listRooms.useQuery();
-  console.log(rooms);
   return (
     <>
       <main className="max-h-screen w-screen">
