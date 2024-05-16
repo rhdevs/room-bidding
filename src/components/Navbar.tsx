@@ -26,6 +26,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
 import { useUser } from "~/pages/_app";
+import { LinkWithQP } from "./ui/link";
 
 const Navbar: React.FC = () => {
   const { data, isSuccess } = useUser();
@@ -35,25 +36,25 @@ const Navbar: React.FC = () => {
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-        <Link
+        <LinkWithQP
           href="#"
           className="flex items-center gap-2 text-lg font-semibold md:text-base"
         >
           <Package2 className="h-6 w-6" />
           <span className="sr-only">Acme Inc</span>
-        </Link>
-        <Link
-          href="/Rooms"
+        </LinkWithQP>
+        <LinkWithQP
+          href="/rooms"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
           Rooms
-        </Link>
-        <Link
-          href="#"
+        </LinkWithQP>
+        <LinkWithQP
+          href="/ranking"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
           Ranking
-        </Link>
+        </LinkWithQP>
       </nav>
       <Sheet>
         <SheetTrigger asChild>
