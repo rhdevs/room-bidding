@@ -13,18 +13,17 @@ import { Input } from "~/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
 import { useUser } from "~/pages/_app";
 import { LinkWithQP } from "./ui/link";
-import { toast } from "./ui/use-toast";
 
 const Navbar: React.FC = () => {
   const { data, isSuccess } = useUser();
 
   if (!isSuccess) return <div>Loading...</div>;
 
-  toast({
-    title: "Welcome back!",
-    description: `Welcome back, ${data?.name ?? "User"}!`,
-    action: <Button>Rank Rooms</Button>,
-  });
+  // toast({
+  //   title: "Welcome back!",
+  //   description: `Welcome back, ${data?.name ?? "User"}!`,
+  //   action: <Button>Rank Rooms</Button>,
+  // });
 
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
