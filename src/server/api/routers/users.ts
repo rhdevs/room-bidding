@@ -26,6 +26,26 @@ export const userRouter = createTRPCRouter({
       },
     });
   }),
+
+  bidForRoom: publicProcedure
+    .input(
+      z.object({
+        userId: z.number(),
+        roomId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const rank = (await ctx.db.bid.count()) + 1;
+
+      return ctx.db.bid.create({
+        data: {
+          userId: input.userId,
+          roomId: input.roomId,
+          rank,
+        },
+      });
+    }),
+
   // listUsers: publicProcedure.query(({ ctx }) => {
   //   return ctx.db.user.findMany({
   //     include: {

@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, use, useState } from "react";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -19,7 +19,7 @@ import { getString } from "./RoomCard";
 type Room = RouterOutputs["room"]["getRoom"];
 
 type BidModalProps = {
-  room: Room;
+  room: NonNullable<Room>;
   children: ReactNode;
   isDialogOpen: boolean;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,62 +31,14 @@ const BidModal: React.FC<BidModalProps> = ({
   isDialogOpen,
   setIsDialogOpen,
 }) => {
-  const [matricNumber, setMatricNumber] = useState("");
-  const roomMutation = api.bid.bidRoom.useMutation();
-  const { data: user, refetch: refetchUser } = api.user.getUser.useQuery(
-    { matricNumber },
-    { enabled: false },
-  );
-
-  const {
-    data: highestUnoccupiedPoints,
-    refetch: refetchHighestUnoccupiedPoints,
-  } = api.user.getHighestUnoccupiedPoints.useQuery();
-
+  const bidRoom = api.user.bidForRoom.useMutation();
   const handleSubmitBid = async () => {
-    // Refetch the user data
-    const { data: refetchedUser } = await refetchUser();
-    const { data: refetchedHighestUnoccupiedPoints } =
-      await refetchHighestUnoccupiedPoints();
-    if (!refetchedUser) {
-      toast.error("User not found");
-      return;
-    }
-
-    if (refetchedUser.occupies) {
-      toast.error("User already occupies a room");
-      return;
-    }
-
-    if (refetchedUser.genderId !== room?.genderId) {
-      toast.error(
-        `${
-          refetchedUser.gender.description
-        } user cannot choose a ${room?.gender.description.toLowerCase()} room`,
-      );
-      return;
-    }
-
-    if (refetchedHighestUnoccupiedPoints === undefined) {
-      toast.error("Failed to fetch highest unoccupied points");
-      return;
-    }
-
-    if (refetchedUser.points < refetchedHighestUnoccupiedPoints) {
-      toast.error("Please wait for your turn.");
-      return;
-    }
-    // Bid the room
-    await roomMutation.mutate({
-      userId: refetchedUser?.id,
-      roomId: room?.id as number,
+    bidRoom.mutate({
+      userId: 1,
+      roomId: room.id,
     });
-
-    if (roomMutation.isSuccess) {
-      console.log(roomMutation.data);
-      toast.success("Bid successfully submitted!");
-      setIsDialogOpen(false);
-    }
+    setIsDialogOpen(false);
+    // TODO add Toast
   };
 
   return (
@@ -107,12 +59,12 @@ const BidModal: React.FC<BidModalProps> = ({
           </DialogDescription>
         </DialogHeader>
 
-        <Label htmlFor="matricNumber">Matric Number</Label>
-        <Input
+        {/* <Label htmlFor="matricNumber">Matric Number</Label> */}
+        {/* <Input
           id="matricNumber"
           value={matricNumber}
           onChange={(e) => setMatricNumber(e.target.value)}
-        />
+        /> */}
 
         <DialogFooter>
           <DialogClose asChild>
