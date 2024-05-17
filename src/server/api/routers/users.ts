@@ -15,7 +15,7 @@ export const userRouter = createTRPCRouter({
       return user;
     }),
 
-  getBids: publicProcedure.input(z.number()).query(async ({ ctx, input }) => {
+  getBids: publicProcedure.input(z.number()).query(({ ctx, input }) => {
     return ctx.db.bid.findMany({
       where: {
         userId: input,
