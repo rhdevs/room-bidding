@@ -1,20 +1,6 @@
-import {
-  NavigationMenu,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "~/components/ui/navigation-menu";
-import Link from "next/link";
 import { CircleUser, Menu, Package2, Search } from "lucide-react";
+import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import { Checkbox } from "~/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,11 +13,18 @@ import { Input } from "~/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
 import { useUser } from "~/pages/_app";
 import { LinkWithQP } from "./ui/link";
+import { toast } from "./ui/use-toast";
 
 const Navbar: React.FC = () => {
   const { data, isSuccess } = useUser();
 
   if (!isSuccess) return <div>Loading...</div>;
+
+  toast({
+    title: "Welcome back!",
+    description: `Welcome back, ${data?.name ?? "User"}!`,
+    action: <Button>Rank Rooms</Button>,
+  });
 
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">

@@ -1,18 +1,15 @@
 import { type AppType } from "next/app";
-import { api } from "~/utils/api";
-import { Toaster } from "react-hot-toast";
-import "~/styles/globals.css";
-import Navbar from "~/components/Navbar";
 import { useSearchParams } from "next/navigation";
-import { createContext } from "react";
-import { User } from "@prisma/client";
+import Navbar from "~/components/Navbar";
+import { Toaster } from "~/components/ui/toaster";
+import "~/styles/globals.css";
+import { api } from "~/utils/api";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const { data, isSuccess } = useUser();
 
   if (!isSuccess) return <div>Loading...</div>;
 
-  data;
   return (
     <>
       <Navbar />
