@@ -155,6 +155,9 @@ const Navbar: React.FC = () => {
             <DropdownMenuItem>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        <div className="text-sm text-muted-foreground">
+          {data?.points} points
+        </div>
       </div>
     </header>
   );
