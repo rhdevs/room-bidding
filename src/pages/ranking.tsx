@@ -1,10 +1,9 @@
-import { MoreHorizontal } from "lucide-react";
 import React from "react";
 import { api } from "~/utils/api";
 
+import { ArrowDown, ArrowUp, X } from "lucide-react";
 import { getString } from "~/components/RoomCard";
 import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,12 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -116,44 +109,20 @@ const QueuePage: React.FC = () => {
                       {bid.rank}
                     </TableCell>
                     <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            aria-haspopup="true"
-                            size="icon"
-                            variant="ghost"
-                          >
-                            <MoreHorizontal className="h-4 w-4" />
-                            <span className="sr-only">Toggle menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem>
-                            <Button
-                              onClick={() => decreaseP(bid.id)}
-                              variant="ghost"
-                            >
-                              Decrease Priority
-                            </Button>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <Button
-                              onClick={() => increaseP(bid.id)}
-                              variant="ghost"
-                            >
-                              Increase Priority
-                            </Button>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <Button
-                              onClick={() => biddelete(bid.id)}
-                              variant="ghost"
-                            >
-                              Delete
-                            </Button>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                      <div className="flex flex-row">
+                        <ArrowUp
+                          className="cursor-pointer"
+                          onClick={() => increaseP(bid.id)}
+                        />
+                        <ArrowDown
+                          className="cursor-pointer"
+                          onClick={() => decreaseP(bid.id)}
+                        />
+                        <X
+                          className="cursor-pointer"
+                          onClick={() => biddelete(bid.id)}
+                        />
+                      </div>
                     </TableCell>
                   </TableRow>
                 </TableBody>
