@@ -1,9 +1,9 @@
-import { RouterOutputs } from "~/utils/api";
-import { Button } from "~/components/ui/button";
-import BidModal from "./BidModal";
-import { useState } from "react";
 import { Block } from "@prisma/client";
+import { useState } from "react";
+import { Button } from "~/components/ui/button";
+import { RouterOutputs } from "~/utils/api";
 import { generateUUID } from "~/utils/uuid";
+import BidModal from "./BidModal";
 type Room = RouterOutputs["room"]["getRoom"];
 
 type RoomCardProps = {

@@ -14,6 +14,21 @@ const rooms = [
     unit: 102,
     gender: "Male",
   },
+  {
+    block: "B2",
+    unit: 103,
+    gender: "Male",
+  },
+  {
+    block: "B2",
+    unit: 104,
+    gender: "Male",
+  },
+  {
+    block: "B2",
+    unit: 105,
+    gender: "Male",
+  },
 ] as const;
 
 const processedRooms = rooms.map((x) => {

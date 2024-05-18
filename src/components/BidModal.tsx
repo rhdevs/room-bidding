@@ -1,4 +1,4 @@
-import React, { ReactNode, use, useState } from "react";
+import React, { ReactNode } from "react";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -10,11 +10,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
-import { api, RouterOutputs } from "~/utils/api";
-import { toast } from "react-hot-toast";
+import { RouterOutputs, api } from "~/utils/api";
 import { getString } from "./RoomCard";
+import { LinkWithQP } from "./ui/link";
+import { toast } from "./ui/use-toast";
 
 type Room = RouterOutputs["room"]["getRoom"];
 
@@ -33,10 +32,31 @@ const BidModal: React.FC<BidModalProps> = ({
 }) => {
   const bidRoom = api.user.bidForRoom.useMutation();
   const handleSubmitBid = async () => {
-    bidRoom.mutate({
-      userId: 1,
-      roomId: room.id,
-    });
+    bidRoom.mutate(
+      {
+        userId: 1,
+        roomId: room.id,
+      },
+      {
+        onSuccess: () => {
+          toast({
+            title: "Room Successfully Bidded!",
+            description: `You have successfully bidded for room ${getString(room)}`,
+            action: (
+              <Button>
+                <LinkWithQP href="/ranking">rank</LinkWithQP>
+              </Button>
+            ),
+          });
+        },
+        onError: () => {
+          toast({
+            title: "Failed to bid for room",
+            description: `Failed to bid for room ${getString(room)}`,
+          });
+        },
+      },
+    );
     setIsDialogOpen(false);
     // TODO add Toast
   };
