@@ -4,6 +4,7 @@ import { api } from "~/utils/api";
 import { ArrowDown, ArrowUp, X } from "lucide-react";
 import { getString } from "~/components/RoomCard";
 import { Badge } from "~/components/ui/badge";
+import { Button } from "~/components/ui/button";
 import {
   Card,
   CardContent,
@@ -12,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { Separator } from "~/components/ui/separator";
 import {
   Table,
   TableBody,
@@ -20,6 +22,12 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 
 const QueuePage: React.FC = () => {
   const { data, isSuccess, isLoading, isFetching } =
@@ -111,20 +119,66 @@ const QueuePage: React.FC = () => {
                       {bid.rank}
                     </TableCell>
                     <TableCell>
-                      <div className="flex flex-row">
-                        <ArrowUp
-                          className="cursor-pointer"
-                          onClick={() => increaseP(bid.id)}
-                        />
-                        <ArrowDown
-                          className="cursor-pointer"
-                          onClick={() => decreaseP(bid.id)}
-                        />
-                        <X
-                          className="cursor-pointer"
-                          onClick={() => biddelete(bid.id)}
-                        />
-                      </div>
+                      <TooltipProvider delayDuration={150}>
+                        <div className="flex flex-row">
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                // disabled={!mail}
+                              >
+                                <ArrowUp
+                                  className="cursor-pointer"
+                                  onClick={() => increaseP(bid.id)}
+                                />
+                                <span className="sr-only">Rank Higher</span>
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Rank Higher</TooltipContent>
+                          </Tooltip>
+                          <Separator
+                            orientation="vertical"
+                            className="mx-1 h-10"
+                          />
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                // disabled={!mail}
+                              >
+                                <ArrowDown
+                                  className="cursor-pointer"
+                                  onClick={() => decreaseP(bid.id)}
+                                />
+                                <span className="sr-only">Rank Lower</span>
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Rank Lower</TooltipContent>
+                          </Tooltip>
+                          <Separator
+                            orientation="vertical"
+                            className="mx-1 h-10"
+                          />
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                // disabled={!mail}
+                              >
+                                <X
+                                  className="cursor-pointer"
+                                  onClick={() => biddelete(bid.id)}
+                                />
+                                <span className="sr-only">Delete Bid</span>
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Delete Bid</TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </TooltipProvider>
                     </TableCell>
                   </TableRow>
                 </TableBody>
