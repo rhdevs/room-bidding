@@ -24,6 +24,9 @@ export const userRouter = createTRPCRouter({
         room: true,
         user: true,
       },
+      orderBy: {
+        rank: "asc",
+      },
     });
   }),
 

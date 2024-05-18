@@ -1,6 +1,6 @@
 import { MoreHorizontal } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { RouterOutputs, api } from "~/utils/api";
+import React from "react";
+import { api } from "~/utils/api";
 
 import { getString } from "~/components/RoomCard";
 import { Badge } from "~/components/ui/badge";
@@ -17,7 +17,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import {
@@ -30,17 +29,30 @@ import {
 } from "~/components/ui/table";
 
 const QueuePage: React.FC = () => {
-  // const { data } = useUser();
-  const [bidData, setbidData] = useState<RouterOutputs["user"]["getBids"]>();
-  const { data, isSuccess } = api.user.getBids.useQuery(1);
-  useEffect(() => {
-    if (isSuccess) {
-      setbidData(data);
-    }
-  }, [isSuccess]);
+  const { data, isSuccess, refetch } = api.user.getBids.useQuery(1);
+  const increasePriority = api.bid.increasePriority.useMutation();
+  const decreasePriority = api.bid.decreasePriority.useMutation();
+  const utils = api.useUtils();
+
   if (!isSuccess) return <div>Loading...</div>;
 
-  console.log(bidData);
+  const increaseP = (id: string) => {
+    increasePriority.mutate(id, {
+      onSuccess: () => {
+        console.log("success");
+        utils.user.getBids.invalidate();
+      },
+    });
+  };
+
+  const decreaseP = async (id: string) => {
+    await decreasePriority.mutateAsync(id, {
+      onSuccess: () => {
+        console.log("success");
+        utils.user.getBids.invalidate();
+      },
+    });
+  };
 
   return (
     <Card>
@@ -67,8 +79,8 @@ const QueuePage: React.FC = () => {
               </TableHead>
             </TableRow>
           </TableHeader>
-          {bidData &&
-            bidData.map((bid) => {
+          {data &&
+            data.map((bid) => {
               return (
                 <TableBody>
                   <TableRow>
@@ -107,8 +119,22 @@ const QueuePage: React.FC = () => {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>Edit</DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Button
+                              onClick={() => decreaseP(bid.id)}
+                              variant="ghost"
+                            >
+                              Decrease Priority
+                            </Button>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Button
+                              onClick={() => increaseP(bid.id)}
+                              variant="ghost"
+                            >
+                              Increase Priority
+                            </Button>
+                          </DropdownMenuItem>
                           <DropdownMenuItem>Delete</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -121,7 +147,7 @@ const QueuePage: React.FC = () => {
       </CardContent>
       <CardFooter>
         <div className="text-xs text-muted-foreground">
-          Showing {bidData?.length} rankings
+          Showing {data?.length} rankings
         </div>
       </CardFooter>
     </Card>

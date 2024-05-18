@@ -1,50 +1,78 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { sendSMS } from "~/server/twilio";
 
 export const bidRouter = createTRPCRouter({
-  bidRoom: publicProcedure
-    .input(z.object({ userId: z.number(), roomId: z.number() }))
+  increasePriority: publicProcedure
+    .input(z.string())
     .mutation(async ({ ctx, input }) => {
-      await ctx.db.user.update({
+      const initialbid = await ctx.db.bid.findUniqueOrThrow({
         where: {
-          id: input.userId,
+          id: input,
         },
-        data: {
-          occupies: {
-            connect: {
-              id: input.roomId,
-            },
+      });
+
+      const nextbid = await ctx.db.bid.findFirstOrThrow({
+        where: {
+          rank: initialbid.rank - 1,
+          userId: initialbid.userId,
+        },
+      });
+
+      await ctx.db.$transaction([
+        ctx.db.bid.update({
+          where: {
+            id: initialbid.id,
           },
-        },
-      });
-
-      await ctx.db.room.update({
-        where: {
-          id: input.roomId,
-        },
-        data: {
-          occupant: {
-            connect: {
-              id: input.userId,
-            },
+          data: {
+            rank: initialbid.rank - 1,
           },
-        },
-      });
+        }),
+        ctx.db.bid.update({
+          where: {
+            id: nextbid.id,
+          },
+          data: {
+            rank: nextbid.rank + 1,
+          },
+        }),
+      ]);
+    }),
 
-      const nextResident = await ctx.db.user.findFirst({
+  decreasePriority: publicProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      const initialbid = await ctx.db.bid.findUniqueOrThrow({
         where: {
-          occupies: null,
-        },
-        orderBy: {
-          points: "desc",
+          id: input,
         },
       });
 
-      if (nextResident?.phoneNumber) {
-        sendSMS(nextResident.phoneNumber);
-      }
+      const nextbid = await ctx.db.bid.findFirstOrThrow({
+        where: {
+          rank: initialbid.rank + 1,
+          userId: initialbid.userId,
+        },
+      });
+
+      await ctx.db.$transaction([
+        ctx.db.bid.update({
+          where: {
+            id: initialbid.id,
+          },
+          data: {
+            rank: initialbid.rank + 1,
+          },
+        }),
+        ctx.db.bid.update({
+          where: {
+            id: nextbid.id,
+          },
+          data: {
+            rank: nextbid.rank - 1,
+          },
+        }),
+      ]);
     }),
 
   // hello: publicProcedure
