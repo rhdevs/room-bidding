@@ -22,13 +22,15 @@ import {
 } from "~/components/ui/table";
 
 const QueuePage: React.FC = () => {
-  const { data, isSuccess, refetch } = api.user.getBids.useQuery(1);
+  const { data, isSuccess, isLoading, isFetching } =
+    api.user.getBids.useQuery(1);
   const increasePriority = api.bid.increasePriority.useMutation();
   const decreasePriority = api.bid.decreasePriority.useMutation();
   const deleteBid = api.bid.deleteBid.useMutation();
   const utils = api.useUtils();
 
-  if (!isSuccess) return <div>Loading...</div>;
+  if (isFetching) return <div>Loading...</div>;
+  console.log(isFetching);
 
   const biddelete = (id: string) => {
     deleteBid.mutate(id, {
