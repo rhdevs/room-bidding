@@ -49,10 +49,10 @@ const BidModal: React.FC<BidModalProps> = ({
             ),
           });
         },
-        onError: () => {
+        onError: (e) => {
           toast({
             title: "Failed to bid for room",
-            description: `Failed to bid for room ${getString(room)}`,
+            description: e.message,
           });
         },
       },

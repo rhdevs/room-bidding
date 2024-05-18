@@ -38,6 +38,17 @@ export const userRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const existingbid = await ctx.db.bid.findFirst({
+        where: {
+          userId: input.userId,
+          roomId: input.roomId,
+        },
+      });
+
+      if (existingbid != null) {
+        throw new Error("You have already bidded for this room");
+      }
+
       const rank = (await ctx.db.bid.count()) + 1;
 
       return ctx.db.bid.create({
