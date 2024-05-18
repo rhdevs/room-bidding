@@ -32,10 +32,19 @@ const QueuePage: React.FC = () => {
   const { data, isSuccess, refetch } = api.user.getBids.useQuery(1);
   const increasePriority = api.bid.increasePriority.useMutation();
   const decreasePriority = api.bid.decreasePriority.useMutation();
+  const deleteBid = api.bid.deleteBid.useMutation();
   const utils = api.useUtils();
 
   if (!isSuccess) return <div>Loading...</div>;
 
+  const biddelete = (id: string) => {
+    deleteBid.mutate(id, {
+      onSuccess: () => {
+        console.log("success");
+        utils.user.getBids.invalidate();
+      },
+    });
+  };
   const increaseP = (id: string) => {
     increasePriority.mutate(id, {
       onSuccess: () => {
@@ -135,7 +144,14 @@ const QueuePage: React.FC = () => {
                               Increase Priority
                             </Button>
                           </DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Button
+                              onClick={() => biddelete(bid.id)}
+                              variant="ghost"
+                            >
+                              Delete
+                            </Button>
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>

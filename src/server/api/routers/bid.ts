@@ -3,6 +3,36 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const bidRouter = createTRPCRouter({
+  deleteBid: publicProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      const bid = await ctx.db.bid.findUniqueOrThrow({
+        where: {
+          id: input,
+        },
+      });
+
+      await ctx.db.$transaction([
+        ctx.db.bid.delete({
+          where: {
+            id: bid.id,
+          },
+        }),
+        ctx.db.bid.updateMany({
+          where: {
+            rank: {
+              gt: bid.rank,
+            },
+            userId: bid.userId,
+          },
+          data: {
+            rank: {
+              decrement: 1,
+            },
+          },
+        }),
+      ]);
+    }),
   increasePriority: publicProcedure
     .input(z.string())
     .mutation(async ({ ctx, input }) => {
