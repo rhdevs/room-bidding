@@ -86,9 +86,7 @@ const QueuePage: React.FC = () => {
                 Projected Occupant
               </TableHead>
               <TableHead className="hidden md:table-cell">Ranking</TableHead>
-              <TableHead>
-                <span className="sr-only">Actions</span>
-              </TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           {data &&
