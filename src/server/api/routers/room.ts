@@ -39,4 +39,12 @@ export const roomRouter = createTRPCRouter({
         },
       });
     }),
+
+  getRoomById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.db.room.findUnique({
+      where: {
+        id: input,
+      },
+    });
+  }),
 });
