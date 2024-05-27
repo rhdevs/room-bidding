@@ -38,12 +38,18 @@ model Room {
     block      Block
     unit       Int
     gender     Gender
-    isDouble   Boolean? @default(false)
+    roomType   RoomType @default(Single)
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
     occupant   User?    @relation(fields: [occupantId], references: [id])
     occupantId Int?     @unique
     Bid        Bid[]
+}
+
+enum RoomType {
+    Single
+    Double
+    SuperSingle
 }
 
 enum Gender {
