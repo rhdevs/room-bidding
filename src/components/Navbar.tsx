@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
-import { useUser } from "~/pages/_app";
+import { useUser } from "~/hooks/useUser";
 import { LinkWithQP } from "./ui/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";

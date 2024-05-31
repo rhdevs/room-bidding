@@ -44,6 +44,7 @@ model Room {
     occupant   User?    @relation(fields: [occupantId], references: [id])
     occupantId Int?     @unique
     Bid        Bid[]
+    index      Int      @default(1)
 }
 
 enum RoomType {
