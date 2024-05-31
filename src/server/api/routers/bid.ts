@@ -21,8 +21,6 @@ const validateBids = async (
       return bid.map((bid) => bid.rank).sort();
     });
 
-  console.log(bids);
-
   for (let i = 0; i < bids.length; i++) {
     if (bids[i] != i + 1) {
       return false;
