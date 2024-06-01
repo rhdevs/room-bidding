@@ -36,10 +36,11 @@ export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
       block: block,
       unit: unit,
       gender: "Male",
-      isDouble: false,
+      roomType: "Single",
       createdAt: new Date(),
       updatedAt: new Date(),
       occupantId: 0,
+      index: 1,
     };
   }
 
