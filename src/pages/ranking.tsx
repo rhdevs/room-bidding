@@ -107,7 +107,7 @@ const QueuePage: React.FC = () => {
                       {getString(bid.room)}
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline">Active</Badge>
+                    {badgeMapping[bid.room.roomType]}
                     </TableCell>
                     <TableCell>120</TableCell>
                     <TableCell className="hidden md:table-cell">
@@ -193,3 +193,11 @@ const QueuePage: React.FC = () => {
   );
 };
 export default QueuePage;
+
+
+const badgeMapping = {
+  Single: <Badge variant="outline" className="bg-blue-500">Single</Badge>,
+  Double: <Badge variant="outline" className="bg-green-500" >Double</Badge>,
+  SuperSingle: <Badge variant="outline" className="bg-sky-200">SuperSingle</Badge>,
+}
+
