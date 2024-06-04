@@ -81,9 +81,9 @@ const QueuePage: React.FC = () => {
               </TableHead> */}
               <TableHead>Room</TableHead>
               <TableHead>Double?</TableHead>
-              <TableHead>Projected Highest Bid</TableHead>
+              <TableHead>Projected Winning Bid</TableHead>
               <TableHead className="hidden md:table-cell">
-                Projected Occupant
+                Projected Winning Occupant
               </TableHead>
               <TableHead className="hidden md:table-cell">Ranking</TableHead>
               <TableHead>Actions</TableHead>
@@ -109,7 +109,9 @@ const QueuePage: React.FC = () => {
                     <TableCell>
                     {badgeMapping[bid.room.roomType]}
                     </TableCell>
-                    <TableCell>120</TableCell>
+                    <TableCell>
+                      {bid.user.points}
+                    </TableCell>
                     <TableCell className="hidden md:table-cell">
                       Nicholas
                     </TableCell>
