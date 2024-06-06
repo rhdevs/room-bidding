@@ -23,7 +23,9 @@ type RoomCardProps = {
 // };
 //
 export const getString = (room: Room) => {
-  return `${room?.block.substring(1, 2)}-${room?.unit}`;
+  return room?.roomType == "Double"
+    ? `${room?.block.substring(1, 2)}-${room?.unit}-${room?.index}`
+    : `${room?.block.substring(1, 2)}-${room?.unit}`;
 };
 
 export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
