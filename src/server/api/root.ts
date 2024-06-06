@@ -1,12 +1,9 @@
 import { createTRPCRouter } from "~/server/api/trpc";
-import { initTRPC } from "@trpc/server";
-import { OpenApiMeta } from "trpc-openapi";
-import { generateOpenApiDocument } from "trpc-openapi";
 
 import { bidRouter } from "~/server/api/routers/bid";
 import { roomRouter } from "~/server/api/routers/room";
+import { emailRouter } from "./routers/emails";
 import { userRouter } from "./routers/users";
-import { createTRPCContext } from "~/server/api/trpc";
 
 /**
  * This is the primary router for your server.
@@ -18,6 +15,7 @@ const routers = {
   bid: bidRouter,
   room: roomRouter,
   user: userRouter,
+  email: emailRouter,
 };
 
 export const appRouter = createTRPCRouter(routers);
