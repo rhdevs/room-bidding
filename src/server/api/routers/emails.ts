@@ -14,6 +14,11 @@ export const emailRouter = createTRPCRouter({
       html: "<strong>It works!</strong>",
     });
   }),
+  sendAll: publicProcedure.query(async ({ ctx }) => {
+    const users = await ctx.db.user.findMany();
+
+    const userdata = users.map((user) => {});
+  }),
 });
 
 // hello: publicProcedure
