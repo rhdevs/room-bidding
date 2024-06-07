@@ -1,9 +1,9 @@
+import { Avatar } from "@radix-ui/react-avatar";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import React, { ReactNode } from "react";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -13,6 +13,7 @@ import {
 } from "~/components/ui/dialog";
 import { RouterOutputs, api } from "~/utils/api";
 import { getString } from "./RoomCard";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -82,7 +83,7 @@ const BidModal: React.FC<BidModalProps> = ({
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent
-        className="sm:max-w-[450px]"
+        className="sm:max-w-[600px]"
         onCloseAutoFocus={() => setIsDialogOpen(false)}
       >
         <Carousel className="relative">
@@ -115,13 +116,6 @@ const roomModal = (
 ) => {
   return (
     <div>
-      <DialogHeader onClick={() => setIsDialogOpen(false)}>
-        <DialogTitle>{`Bid for room ${getString(room)}`}</DialogTitle>
-        <DialogDescription>
-          Are you sure you want to bid for this room?
-        </DialogDescription>
-      </DialogHeader>
-
       {/* <Label htmlFor="matricNumber">Matric Number</Label> */}
       {/* <Input
           id="matricNumber"
@@ -129,19 +123,146 @@ const roomModal = (
           onChange={(e) => setMatricNumber(e.target.value)}
         /> */}
 
+      <DialogHeader>
+        <DialogTitle>Bid on Room</DialogTitle>
+        <DialogDescription>Current occupant: Jane Doe</DialogDescription>
+      </DialogHeader>
+      <div className="grid gap-6 py-4">
+        <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+          <div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              Current Bid
+            </div>
+            <div className="font-medium">500 points</div>
+          </div>
+          <div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              Points Needed to Beat
+            </div>
+            <div className="font-medium">501 points</div>
+          </div>
+        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Current Bids</CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-4 max-h-[300px] overflow-auto">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Avatar className="border w-8 h-8">
+                  <img src="/placeholder.svg" alt="Avatar" />
+                </Avatar>
+                <div>
+                  <div className="font-medium">Jane Doe</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    500 points
+                  </div>
+                </div>
+              </div>
+              <div className="text-sm font-medium">
+                <span className="text-gray-500 dark:text-gray-400">
+                  Current Bid
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Avatar className="border w-8 h-8">
+                  <img src="/placeholder.svg" alt="Avatar" />
+                </Avatar>
+                <div>
+                  <div className="font-medium">John Bauer</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    450 points
+                  </div>
+                </div>
+              </div>
+              <div className="text-sm font-medium">
+                <span className="text-gray-500 dark:text-gray-400">
+                  Previous Bid
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Avatar className="border w-8 h-8">
+                  <img src="/placeholder.svg" alt="Avatar" />
+                </Avatar>
+                <div>
+                  <div className="font-medium">Sarah Miller</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    400 points
+                  </div>
+                </div>
+              </div>
+              <div className="text-sm font-medium">
+                <span className="text-gray-500 dark:text-gray-400">
+                  Previous Bid
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Avatar className="border w-8 h-8">
+                  <img src="/placeholder.svg" alt="Avatar" />
+                </Avatar>
+                <div>
+                  <div className="font-medium">Michael Johnson</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    375 points
+                  </div>
+                </div>
+              </div>
+              <div className="text-sm font-medium">
+                <span className="text-gray-500 dark:text-gray-400">
+                  Previous Bid
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Avatar className="border w-8 h-8">
+                  <img src="/placeholder.svg" alt="Avatar" />
+                </Avatar>
+                <div>
+                  <div className="font-medium">Emily Michaels</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    350 points
+                  </div>
+                </div>
+              </div>
+              <div className="text-sm font-medium">
+                <span className="text-gray-500 dark:text-gray-400">
+                  Previous Bid
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Avatar className="border w-8 h-8">
+                  <img src="/placeholder.svg" alt="Avatar" />
+                </Avatar>
+                <div>
+                  <div className="font-medium">Robert Davis</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    325 points
+                  </div>
+                </div>
+              </div>
+              <div className="text-sm font-medium">
+                <span className="text-gray-500 dark:text-gray-400">
+                  Previous Bid
+                </span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
       <DialogFooter>
-        <DialogClose asChild>
-          <Button
-            type="button"
-            onClick={() => setIsDialogOpen(false)}
-            variant="secondary"
-          >
-            Cancel
-          </Button>
-        </DialogClose>
-        <Button onClick={handleSubmitBid} type="submit">
-          Submit bid
+        <Button variant="outline" className="mr-auto">
+          Cancel
         </Button>
+        <Button>Bid Room</Button>
       </DialogFooter>
     </div>
   );
