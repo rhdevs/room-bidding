@@ -1,14 +1,13 @@
-import { RouterOutputs } from "~/utils/api";
-import { api } from "~/utils/api";
-import RoomCard from "~/components/RoomCard";
 import React from "react";
-import GrassPatch from "./GrassPatch";
-import RFResidence from "./RFResidence";
-import LevelCard from "./LevelCard";
-import Toilet from "./Toilet";
-import Pantry from "./Pantry";
-import Stairs from "./Stairs";
+import RoomCard from "~/components/RoomCard";
+import { RouterOutputs, api } from "~/utils/api";
 import { generateUUID } from "~/utils/uuid";
+import GrassPatch from "./GrassPatch";
+import LevelCard from "./LevelCard";
+import Pantry from "./Pantry";
+import RFResidence from "./RFResidence";
+import Stairs from "./Stairs";
+import Toilet from "./Toilet";
 type Room = RouterOutputs["room"]["getRoom"];
 
 const Male = {
@@ -29,7 +28,7 @@ const BlockTwo: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  const roomsset = new Map<string, Room>();
+  const roomsset = new Map<string, NonNullable<Room>>();
   for (const room of rooms) {
     roomsset.set(generateUUID(room.block, room.unit), room);
   }

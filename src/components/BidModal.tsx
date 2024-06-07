@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -18,7 +18,9 @@ import { toast } from "./ui/use-toast";
 type Room = RouterOutputs["room"]["getRoom"];
 
 type BidModalProps = {
+  isDouble: boolean;
   room: NonNullable<Room>;
+  room2: Room
   children: ReactNode;
   isDialogOpen: boolean;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,16 +28,18 @@ type BidModalProps = {
 
 const BidModal: React.FC<BidModalProps> = ({
   room,
+  room2,
   children,
   isDialogOpen,
   setIsDialogOpen,
+  isDouble = false,
 }) => {
   const bidRoom = api.user.bidForRoom.useMutation();
   const handleSubmitBid = async () => {
     bidRoom.mutate(
       {
         userId: 1,
-        roomId: room.id,
+        roomId: currentRoom.id,
       },
       {
         onSuccess: () => {
@@ -61,6 +65,8 @@ const BidModal: React.FC<BidModalProps> = ({
     // TODO add Toast
   };
 
+  const [currentRoom, setCurrentRoom] = useState<NonNullable<Room>>(room);
+
   return (
     <Dialog
       open={isDialogOpen}
@@ -72,6 +78,15 @@ const BidModal: React.FC<BidModalProps> = ({
         className="sm:max-w-[425px]"
         onCloseAutoFocus={() => setIsDialogOpen(false)}
       >
+      {roomModal(currentRoom, setIsDialogOpen,handleSubmitBid)}
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const roomModal = (room: Room,setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>, handleSubmitBid: () => Promise<void>) => {
+  return (
+    <>
         <DialogHeader onClick={() => setIsDialogOpen(false)}>
           <DialogTitle>{`Bid for room ${getString(room)}`}</DialogTitle>
           <DialogDescription>
@@ -100,9 +115,7 @@ const BidModal: React.FC<BidModalProps> = ({
             Submit bid
           </Button>
         </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-};
+    </>
+  )}
 
 export default BidModal;

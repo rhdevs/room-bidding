@@ -31,6 +31,7 @@ export const getString = (room: Room) => {
 export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   let room = roomset.get(generateUUID(block, unit)) as Room;
+  const secondroom = roomset.get(generateUUID(block, unit, 2)) as Room;
 
   if (room == null) {
     room = {
@@ -46,10 +47,11 @@ export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
     };
   }
 
-  // const room = rooms?.find((room) => room?.name === roomNumber) || null;
   return (
     <BidModal
+      isDouble={secondroom != undefined}
       room={room}
+      room2={secondroom}
       isDialogOpen={isDialogOpen}
       setIsDialogOpen={setIsDialogOpen}
       key={room?.id}
@@ -61,7 +63,7 @@ export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
       >
         <span className="text-sm">{getString(room)}</span>
         {/* <span>{room?.gender}</span> */}
-        <span>Male</span>
+        <span>{secondroom == undefined ? "True" : "False"}</span>
         {/* <span className="font-bold">{room?.occupant?.name}</span> */}
       </Button>
     </BidModal>
