@@ -30,7 +30,7 @@ const BlockTwo: React.FC = () => {
 
   const roomsset = new Map<string, NonNullable<Room>>();
   for (const room of rooms) {
-    roomsset.set(generateUUID(room.block, room.unit), room);
+    roomsset.set(generateUUID(room.block, room.unit, room.index), room);
   }
 
   return (

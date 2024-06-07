@@ -8,47 +8,47 @@ const rooms = [
     block: "B2",
     unit: 101,
     gender: "Male",
-    index: 1
+    index: 1,
   },
   {
     block: "B2",
     unit: 101,
     gender: "Male",
-    index: 2
+    index: 2,
   },
   {
     block: "B2",
     unit: 102,
     gender: "Male",
-    index: 1
+    index: 1,
   },
   {
     block: "B2",
     unit: 103,
     gender: "Male",
-    index: 1
+    index: 1,
   },
   {
     block: "B2",
     unit: 104,
     gender: "Male",
-    index: 1
+    index: 1,
   },
   {
     block: "B2",
     unit: 105,
     gender: "Male",
-    index: 1
+    index: 1,
   },
 ] as const;
 
-
 const processedRooms = rooms.map((x) => {
   return {
-    id: generateUUID(x.block, x.unit,x.index),
+    id: generateUUID(x.block, x.unit, x.index),
     block: x.block,
     unit: x.unit,
     gender: x.gender,
+    index: x.index,
   };
 });
 

@@ -30,7 +30,7 @@ export const getString = (room: Room) => {
 
 export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  let room = roomset.get(generateUUID(block, unit)) as Room;
+  let room = roomset.get(generateUUID(block, unit, 1)) as Room;
   const secondroom = roomset.get(generateUUID(block, unit, 2)) as Room;
 
   if (room == null) {
@@ -45,6 +45,9 @@ export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
       occupantId: 0,
       index: 1,
     };
+  }
+  if (secondroom != undefined) {
+    console.log(secondroom);
   }
 
   return (
