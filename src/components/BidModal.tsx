@@ -44,11 +44,13 @@ const BidModal: React.FC<BidModalProps> = ({
   isDouble = false,
 }) => {
   const bidRoom = api.user.bidForRoom.useMutation();
-  const handleSubmitBid = async () => {
+  const handleSubmitBid = async (room: Room) => {
+    if (!room) return;
+
     bidRoom.mutate(
       {
         userId: 1,
-        roomId: currentRoom.id,
+        roomId: room.id ?? "",
       },
       {
         onSuccess: () => {
@@ -86,34 +88,56 @@ const BidModal: React.FC<BidModalProps> = ({
         className="sm:max-w-[600px]"
         onCloseAutoFocus={() => setIsDialogOpen(false)}
       >
-        <Carousel className="relative">
-          <CarouselContent>
-            <CarouselItem>
-              {roomModal(room, setIsDialogOpen, handleSubmitBid)}
-            </CarouselItem>
-            <CarouselItem>
-              {roomModal(room2, setIsDialogOpen, handleSubmitBid)}
-            </CarouselItem>
-          </CarouselContent>
-          <CarouselPrevious className="absolute left-[-80px] top-1/2 -translate-y-1/2 z-10">
-            <ChevronLeftIcon className="h-6 w-6" />
-            <span className="sr-only">Previous</span>
-          </CarouselPrevious>
-          <CarouselNext className="absolute right-[-80px] top-1/2 -translate-y-1/2 z-10">
-            <ChevronRightIcon className="h-6 w-6" />
-            <span className="sr-only">Next</span>
-          </CarouselNext>
-        </Carousel>
+        {isDouble ? (
+          <Carousel className="relative">
+            <CarouselContent>
+              <CarouselItem>
+                <RoomModal
+                  room={room}
+                  setIsDialogOpen={setIsDialogOpen}
+                  handleSubmitBid={handleSubmitBid}
+                ></RoomModal>
+              </CarouselItem>
+              <CarouselItem>
+                <RoomModal
+                  room={room2}
+                  setIsDialogOpen={setIsDialogOpen}
+                  handleSubmitBid={handleSubmitBid}
+                ></RoomModal>
+              </CarouselItem>
+            </CarouselContent>
+            <CarouselPrevious className="absolute left-[-80px] top-1/2 -translate-y-1/2 z-10">
+              <ChevronLeftIcon className="h-6 w-6" />
+              <span className="sr-only">Previous</span>
+            </CarouselPrevious>
+            <CarouselNext className="absolute right-[-80px] top-1/2 -translate-y-1/2 z-10">
+              <ChevronRightIcon className="h-6 w-6" />
+              <span className="sr-only">Next</span>
+            </CarouselNext>
+          </Carousel>
+        ) : (
+          <RoomModal
+            room={room}
+            setIsDialogOpen={setIsDialogOpen}
+            handleSubmitBid={handleSubmitBid}
+          ></RoomModal>
+        )}
       </DialogContent>
     </Dialog>
   );
 };
 
-const roomModal = (
-  room: Room,
-  setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>,
-  handleSubmitBid: () => Promise<void>,
-) => {
+type RoomModalProps = {
+  room: Room;
+  setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSubmitBid: (room: Room) => Promise<void>;
+};
+
+const RoomModal = ({
+  room,
+  setIsDialogOpen,
+  handleSubmitBid,
+}: RoomModalProps) => {
   return (
     <div>
       {/* <Label htmlFor="matricNumber">Matric Number</Label> */}
@@ -124,7 +148,7 @@ const roomModal = (
         /> */}
 
       <DialogHeader>
-        <DialogTitle>Bid on Room</DialogTitle>
+        <DialogTitle>Bid on Room {getString(room)}</DialogTitle>
         <DialogDescription>Current occupant: Jane Doe</DialogDescription>
       </DialogHeader>
       <div className="grid gap-6 py-4">
@@ -147,122 +171,45 @@ const roomModal = (
             <CardTitle>Current Bids</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 max-h-[300px] overflow-auto">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Avatar className="border w-8 h-8">
-                  <img src="/placeholder.svg" alt="Avatar" />
-                </Avatar>
-                <div>
-                  <div className="font-medium">Jane Doe</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    500 points
+            {[
+              { name: "Jane Doe", points: 500, bidType: "Current Bid" },
+              { name: "John Bauer", points: 450, bidType: "Previous Bid" },
+              { name: "Sarah Miller", points: 400, bidType: "Previous Bid" },
+              { name: "Michael Johnson", points: 375, bidType: "Previous Bid" },
+              { name: "Emily Michaels", points: 350, bidType: "Previous Bid" },
+              { name: "Robert Davis", points: 325, bidType: "Previous Bid" },
+            ].map((bid, index) => (
+              <div className="flex items-center justify-between" key={index}>
+                <div className="flex items-center gap-4">
+                  <Avatar className="border w-8 h-8">
+                    <img src="/placeholder.svg" alt="Avatar" />
+                  </Avatar>
+                  <div>
+                    <div className="font-medium">{bid.name}</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                      {bid.points} points
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="text-sm font-medium">
-                <span className="text-gray-500 dark:text-gray-400">
-                  Current Bid
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Avatar className="border w-8 h-8">
-                  <img src="/placeholder.svg" alt="Avatar" />
-                </Avatar>
-                <div>
-                  <div className="font-medium">John Bauer</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    450 points
-                  </div>
+                <div className="text-sm font-medium">
+                  <span className="text-gray-500 dark:text-gray-400">
+                    {bid.bidType}
+                  </span>
                 </div>
               </div>
-              <div className="text-sm font-medium">
-                <span className="text-gray-500 dark:text-gray-400">
-                  Previous Bid
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Avatar className="border w-8 h-8">
-                  <img src="/placeholder.svg" alt="Avatar" />
-                </Avatar>
-                <div>
-                  <div className="font-medium">Sarah Miller</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    400 points
-                  </div>
-                </div>
-              </div>
-              <div className="text-sm font-medium">
-                <span className="text-gray-500 dark:text-gray-400">
-                  Previous Bid
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Avatar className="border w-8 h-8">
-                  <img src="/placeholder.svg" alt="Avatar" />
-                </Avatar>
-                <div>
-                  <div className="font-medium">Michael Johnson</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    375 points
-                  </div>
-                </div>
-              </div>
-              <div className="text-sm font-medium">
-                <span className="text-gray-500 dark:text-gray-400">
-                  Previous Bid
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Avatar className="border w-8 h-8">
-                  <img src="/placeholder.svg" alt="Avatar" />
-                </Avatar>
-                <div>
-                  <div className="font-medium">Emily Michaels</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    350 points
-                  </div>
-                </div>
-              </div>
-              <div className="text-sm font-medium">
-                <span className="text-gray-500 dark:text-gray-400">
-                  Previous Bid
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Avatar className="border w-8 h-8">
-                  <img src="/placeholder.svg" alt="Avatar" />
-                </Avatar>
-                <div>
-                  <div className="font-medium">Robert Davis</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    325 points
-                  </div>
-                </div>
-              </div>
-              <div className="text-sm font-medium">
-                <span className="text-gray-500 dark:text-gray-400">
-                  Previous Bid
-                </span>
-              </div>
-            </div>
+            ))}
           </CardContent>
         </Card>
       </div>
       <DialogFooter>
-        <Button variant="outline" className="mr-auto">
+        <Button
+          variant="outline"
+          className="mr-auto"
+          onClick={() => setIsDialogOpen(false)}
+        >
           Cancel
         </Button>
-        <Button>Bid Room</Button>
+        <Button onClick={() => handleSubmitBid(room)}>Bid Room</Button>
       </DialogFooter>
     </div>
   );
