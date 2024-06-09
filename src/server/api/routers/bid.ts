@@ -27,6 +27,8 @@ const validateBids = async (
     }
   }
 
+  console.log(bids);
+
   return true;
 };
 
@@ -95,7 +97,7 @@ export const bidRouter = createTRPCRouter({
             rank: nextbid.rank + 1,
           },
         });
-        if (await validateBids(initialbid.userId, db)) {
+        if (!(await validateBids(initialbid.userId, db))) {
           throw new Error("Something wrong with the bids");
         }
       });
@@ -132,7 +134,7 @@ export const bidRouter = createTRPCRouter({
             rank: nextbid.rank - 1,
           },
         });
-        if (await validateBids(initialbid.userId, db)) {
+        if (!(await validateBids(initialbid.userId, db))) {
           throw new Error("Something wrong with the bids");
         }
       });
