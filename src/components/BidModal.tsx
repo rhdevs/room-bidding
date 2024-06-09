@@ -139,7 +139,7 @@ const RoomModal = ({
   handleSubmitBid,
 }: RoomModalProps) => {
   return (
-    <div>
+    <>
       {/* <Label htmlFor="matricNumber">Matric Number</Label> */}
       {/* <Input
           id="matricNumber"
@@ -211,7 +211,7 @@ const RoomModal = ({
         </Button>
         <Button onClick={() => handleSubmitBid(room)}>Bid Room</Button>
       </DialogFooter>
-    </div>
+    </>
   );
 };
 

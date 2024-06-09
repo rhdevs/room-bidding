@@ -1,7 +1,19 @@
 import { PrismaClient } from "@prisma/client";
 import { generateUUID } from "~/utils/uuid";
 const prisma = new PrismaClient();
-async function seedUsers() {}
+
+async function seedUsers() {
+  await prisma.user.create({
+    data: {
+      gender: "Male",
+      name: "Chuah Zi Yang",
+      points: 100,
+      matricNumber: "e1123255",
+      nusNetId: "A0273852X",
+      phoneNumber: "91262529",
+    },
+  });
+}
 
 const rooms = [
   {
@@ -64,7 +76,7 @@ async function seedRooms() {
 
 async function main() {
   // await seedGenders();
-  await seedRooms();
+  // await seedRooms();
   await seedUsers();
 }
 main()
