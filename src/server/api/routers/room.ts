@@ -45,6 +45,13 @@ export const roomRouter = createTRPCRouter({
       where: {
         id: input,
       },
+      include: {
+        Bid: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
   }),
 });

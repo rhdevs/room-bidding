@@ -41,7 +41,6 @@ const BidModal: React.FC<BidModalProps> = ({
   children,
   isDialogOpen,
   setIsDialogOpen,
-  isDouble = false,
 }) => {
   const bidRoom = api.user.bidForRoom.useMutation();
   const handleSubmitBid = async (room: Room) => {
@@ -88,7 +87,7 @@ const BidModal: React.FC<BidModalProps> = ({
         className="sm:max-w-[600px]"
         onCloseAutoFocus={() => setIsDialogOpen(false)}
       >
-        {isDouble ? (
+        {room2 != null ? (
           <Carousel className="relative">
             <CarouselContent>
               <CarouselItem>
@@ -128,25 +127,17 @@ const BidModal: React.FC<BidModalProps> = ({
 };
 
 type RoomModalProps = {
-  room: Room;
+  room: NonNullable<Room>;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleSubmitBid: (room: Room) => Promise<void>;
 };
-
-const mockData = [
-  { name: "Jane Doe", points: 500, bidType: "anotherRoom" },
-  { name: "John Bauer", points: 450, bidType: "anotherRoom" },
-  { name: "Sarah Miller", points: 400, bidType: "winningBid" },
-  { name: "Michael Johnson", points: 375, bidType: "lowBid" },
-  { name: "Emily Michaels", points: 350, bidType: "lowBid" },
-  { name: "Robert Davis", points: 325, bidType: "lowBid" },
-] as const;
 
 const RoomModal = ({
   room,
   setIsDialogOpen,
   handleSubmitBid,
 }: RoomModalProps) => {
+  const fullRoom = api.room.getRoomById.useQuery(room.id);
   return (
     <>
       {/* <Label htmlFor="matricNumber">Matric Number</Label> */}
@@ -180,9 +171,22 @@ const RoomModal = ({
             <CardTitle>Current Bids</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 max-h-[300px] overflow-auto">
-            {mockData.map((bid, index) => {
-              return CurrentBidRow(index, bid);
-            })}
+            {fullRoom.isSuccess ? (
+              fullRoom
+                .data!.Bid.map((bid) => {
+                  return {
+                    name: bid.user.name,
+                    points: bid.user.points,
+                    // TODO
+                    bidType: "anotherRoom",
+                  } as const;
+                })
+                .map((bid, index) => {
+                  return CurrentBidRow(index, bid);
+                })
+            ) : (
+              <div>Loading...</div>
+            )}
           </CardContent>
         </Card>
       </div>
