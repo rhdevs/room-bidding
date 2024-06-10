@@ -54,14 +54,16 @@ export const roomRouter = createTRPCRouter({
       },
     }))!.Bid;
 
-    return bids.map((bid) => {
-      return {
-        name: bid.user.name,
-        points: bid.user.points,
-        // TODO
-        bidType: "anotherRoom",
-      } as const;
-    });
+    return bids
+      .map((bid) => {
+        return {
+          name: bid.user.name,
+          points: bid.user.points,
+          // TODO
+          bidType: "anotherRoom",
+        } as const;
+      })
+      .sort((a, b) => b.points - a.points);
   }),
 
   getRoomById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
