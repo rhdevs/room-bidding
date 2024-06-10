@@ -40,6 +40,30 @@ export const roomRouter = createTRPCRouter({
       });
     }),
 
+  getBids: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    const bids = (await ctx.db.room.findFirst({
+      where: {
+        id: input,
+      },
+      include: {
+        Bid: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    }))!.Bid;
+
+    return bids.map((bid) => {
+      return {
+        name: bid.user.name,
+        points: bid.user.points,
+        // TODO
+        bidType: "anotherRoom",
+      } as const;
+    });
+  }),
+
   getRoomById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.db.room.findUnique({
       where: {
