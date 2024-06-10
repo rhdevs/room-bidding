@@ -8,6 +8,10 @@ export const userRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const users = await ctx.db.user.findMany();
 
+      users.forEach((user) => {
+        console.log(hashandSlice(user.nusNetId));
+      });
+
       const user =
         users.find((user) => hashandSlice(user.nusNetId) === input) ?? null;
       console.log(user);
