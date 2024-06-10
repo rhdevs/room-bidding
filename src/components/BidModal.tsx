@@ -133,6 +133,15 @@ type RoomModalProps = {
   handleSubmitBid: (room: Room) => Promise<void>;
 };
 
+const mockData = [
+  { name: "Jane Doe", points: 500, bidType: "anotherRoom" },
+  { name: "John Bauer", points: 450, bidType: "anotherRoom" },
+  { name: "Sarah Miller", points: 400, bidType: "winningBid" },
+  { name: "Michael Johnson", points: 375, bidType: "lowBid" },
+  { name: "Emily Michaels", points: 350, bidType: "lowBid" },
+  { name: "Robert Davis", points: 325, bidType: "lowBid" },
+] as const;
+
 const RoomModal = ({
   room,
   setIsDialogOpen,
@@ -159,45 +168,21 @@ const RoomModal = ({
             </div>
             <div className="font-medium">500 points</div>
           </div>
-          <div>
+          {/* <div>
             <div className="text-sm text-gray-500 dark:text-gray-400">
               Points Needed to Beat
             </div>
             <div className="font-medium">501 points</div>
-          </div>
+          </div> */}
         </div>
         <Card>
           <CardHeader>
             <CardTitle>Current Bids</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 max-h-[300px] overflow-auto">
-            {[
-              { name: "Jane Doe", points: 500, bidType: "Current Bid" },
-              { name: "John Bauer", points: 450, bidType: "Previous Bid" },
-              { name: "Sarah Miller", points: 400, bidType: "Previous Bid" },
-              { name: "Michael Johnson", points: 375, bidType: "Previous Bid" },
-              { name: "Emily Michaels", points: 350, bidType: "Previous Bid" },
-              { name: "Robert Davis", points: 325, bidType: "Previous Bid" },
-            ].map((bid, index) => (
-              <div className="flex items-center justify-between" key={index}>
-                <div className="flex items-center gap-4">
-                  <Avatar className="border w-8 h-8">
-                    <img src="/placeholder.svg" alt="Avatar" />
-                  </Avatar>
-                  <div>
-                    <div className="font-medium">{bid.name}</div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
-                      {bid.points} points
-                    </div>
-                  </div>
-                </div>
-                <div className="text-sm font-medium">
-                  <span className="text-gray-500 dark:text-gray-400">
-                    {bid.bidType}
-                  </span>
-                </div>
-              </div>
-            ))}
+            {mockData.map((bid, index) => {
+              return CurrentBidRow(index, bid);
+            })}
           </CardContent>
         </Card>
       </div>
@@ -216,3 +201,48 @@ const RoomModal = ({
 };
 
 export default BidModal;
+
+function CurrentBidRow(
+  index: number,
+  bid: {
+    name: string;
+    points: number;
+    bidType: "anotherRoom" | "winningBid" | "lowBid";
+  },
+): React.JSX.Element {
+  const mappings = {
+    anotherRoom: {
+      titleText: "Has Another Room",
+      titleTextColor: "text-red-500",
+    },
+    winningBid: {
+      titleText: "Current Winning Bid",
+      titleTextColor: "text-green-500",
+    },
+    lowBid: {
+      titleText: "Waiting List",
+      titleTextColor: "text-gray-500",
+    },
+  } as const;
+  return (
+    <div className="flex items-center justify-between" key={index}>
+      <div className="flex items-center gap-4">
+        <Avatar className="border w-8 h-8">
+          <img src="/placeholder.svg" alt="Avatar" />
+        </Avatar>
+        <div>
+          <div className="font-medium">{bid.name}</div>
+          <div className={`text-sm ${mappings[bid.bidType].titleTextColor}`}>
+            {mappings[bid.bidType].titleText}
+          </div>
+        </div>
+      </div>
+      <div className="text-sm font-medium">
+        <div className="text-sm text-gray-500 dark:text-gray-400">
+          {bid.points} points
+        </div>
+        {/* <span className="text-gray-500 dark:text-gray-400">{bid.bidType}</span> */}
+      </div>
+    </div>
+  );
+}
