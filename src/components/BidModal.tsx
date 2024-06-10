@@ -172,18 +172,22 @@ const RoomModal = ({
           </CardHeader>
           <CardContent className="grid gap-4 max-h-[300px] overflow-auto">
             {fullRoom.isSuccess ? (
-              fullRoom
-                .data!.Bid.map((bid) => {
-                  return {
-                    name: bid.user.name,
-                    points: bid.user.points,
-                    // TODO
-                    bidType: "anotherRoom",
-                  } as const;
-                })
-                .map((bid, index) => {
-                  return CurrentBidRow(index, bid);
-                })
+              fullRoom.data!.Bid.length != 0 ? (
+                fullRoom
+                  .data!.Bid.map((bid) => {
+                    return {
+                      name: bid.user.name,
+                      points: bid.user.points,
+                      // TODO
+                      bidType: "anotherRoom",
+                    } as const;
+                  })
+                  .map((bid, index) => {
+                    return CurrentBidRow(index, bid);
+                  })
+              ) : (
+                <div>No Bids Yet</div>
+              )
             ) : (
               <div>Loading...</div>
             )}
