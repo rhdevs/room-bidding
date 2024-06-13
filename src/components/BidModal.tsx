@@ -27,7 +27,6 @@ import { toast } from "./ui/use-toast";
 type Room = RouterOutputs["room"]["getRoom"];
 
 type BidModalProps = {
-  isDouble: boolean;
   room: NonNullable<Room>;
   room2: Room;
   children: ReactNode;
@@ -55,7 +54,9 @@ const BidModal: React.FC<BidModalProps> = ({
         onSuccess: () => {
           toast({
             title: "Room Successfully Bidded!",
-            description: `You have successfully bidded for room ${getString(room)}`,
+            description: `You have successfully bidded for room ${getString(
+              room,
+            )}`,
             action: (
               <Button>
                 <LinkWithQP href="/ranking">rank</LinkWithQP>

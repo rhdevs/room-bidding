@@ -52,7 +52,6 @@ export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
 
   return (
     <BidModal
-      isDouble={secondroom != undefined}
       room={room}
       room2={secondroom}
       isDialogOpen={isDialogOpen}
@@ -64,9 +63,9 @@ export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
         // disabled={room?.occupant ? true : false}
         onClick={() => setIsDialogOpen(true)}
       >
-        <span className="text-sm">{getString(room)}</span>
+        <span className="text-sm">{room.unit}</span>
         {/* <span>{room?.gender}</span> */}
-        <span>{secondroom == undefined ? "True" : "False"}</span>
+        <span>{secondroom == undefined ? "Single" : "Double"}</span>
         {/* <span className="font-bold">{room?.occupant?.name}</span> */}
       </Button>
     </BidModal>
