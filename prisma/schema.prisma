@@ -39,8 +39,6 @@ model Room {
     unit       Int
     gender     Gender
     roomType   RoomType @default(Single)
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
     occupant   User?    @relation(fields: [occupantId], references: [id])
     occupantId Int?     @unique
     Bid        Bid[]
