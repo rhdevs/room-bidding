@@ -1,29 +1,28 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { useUser } from "~/hooks/useUser";
 
 import { api } from "~/utils/api";
-import { RouterOutputs } from "~/utils/api";
-
-type Resident = RouterOutputs["user"]["createUser"];
 
 export default function Residents() {
-  const { data: residents } = api.user.listUsers.useQuery();
-  const { data: highestUnoccupiedPoints } =
-    api.user.getHighestUnoccupiedPoints.useQuery();
+  const { data: residents } = api.user.getAllUsers.useQuery();
+
+  const user = useUser();
+
+  if (!user.isSuccess) return <div>Loading...</div>;
+
   return (
     <div className="mx-8 mt-32 flex flex-col items-center justify-center bg-background">
       <h1 className="glow mb-12 text-center text-7xl font-bold text-primary  drop-shadow-md">
         <span className="text-5xl">Current Point in Queue:</span>
         <br />
-        <span>{highestUnoccupiedPoints}</span>
+        <span>{user.data!.points}</span>
       </h1>
       <Table>
         {/* <TableCaption></TableCaption> */}
@@ -39,7 +38,7 @@ export default function Residents() {
         <TableBody>
           {residents?.map((resident) => {
             const name = resident.name;
-            const gender = resident.gender.description;
+            const gender = resident.gender;
             const points = resident.points;
             const matricNumber = resident.matricNumber;
             return (
@@ -63,7 +62,7 @@ export default function Residents() {
                   {points}
                 </TableCell>
                 <TableCell>
-                  {resident.occupies ? resident.occupies.name : "None"}
+                  {/* {resident.occupies ? resident.occupies.name : "None"} */}
                 </TableCell>
               </TableRow>
             );

@@ -72,6 +72,12 @@ const Navbar: React.FC = () => {
         >
           Ranking
         </LinkWithQP>
+        <LinkWithQP
+          href="/residents"
+          className="text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Residents
+        </LinkWithQP>
       </nav>
       <Sheet>
         <SheetTrigger asChild>
