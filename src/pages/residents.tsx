@@ -20,7 +20,7 @@ export default function Residents() {
   return (
     <div className="mx-8 mt-32 flex flex-col items-center justify-center bg-background">
       <h1 className="glow mb-12 text-center text-7xl font-bold text-primary  drop-shadow-md">
-        <span className="text-5xl">Current Point in Queue:</span>
+        <span className="text-5xl">Your Points:</span>
         <br />
         <span>{user.data!.points}</span>
       </h1>
