@@ -20,7 +20,11 @@ export const userRouter = createTRPCRouter({
     }),
 
   getAllUsers: publicProcedure.query(async ({ ctx }) => {
-    const users = await ctx.db.user.findMany();
+    const users = await ctx.db.user.findMany({
+      orderBy: {
+        points: "desc",
+      },
+    });
     return users;
   }),
 
