@@ -19,8 +19,7 @@ export const userRouter = createTRPCRouter({
       return user;
     }),
 
-  getAllUsers: publicProcedure
-  .query(async ({ ctx }) => {
+  getAllUsers: publicProcedure.query(async ({ ctx }) => {
     const users = await ctx.db.user.findMany();
     return users;
   }),
@@ -57,6 +56,22 @@ export const userRouter = createTRPCRouter({
 
       if (existingbid != null) {
         throw new Error("You have already bidded for this room");
+      }
+
+      const user = await ctx.db.user.findUnique({
+        where: {
+          id: input.userId,
+        },
+      });
+
+      const room = await ctx.db.room.findUnique({
+        where: {
+          id: input.roomId,
+        },
+      });
+
+      if (user!.gender != room!.gender) {
+        throw new Error("Wrong Gender");
       }
 
       const rank = (await ctx.db.bid.count()) + 1;
