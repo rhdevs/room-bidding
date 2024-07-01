@@ -59,7 +59,7 @@ export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
       key={room?.id}
     >
       <Button
-        className="flex h-16 min-h-[64px] w-20 min-w-[80px] flex-col px-2 py-1 text-xs"
+        className={`${mappings[room?.gender]?.Single} outline outline-offset-2 outline-[2px] flex h-16 min-h-[64px] w-20 min-w-[80px] flex-col px-2 py-1 text-xs`}
         // disabled={room?.occupant ? true : false}
         onClick={() => setIsDialogOpen(true)}
       >
@@ -71,3 +71,13 @@ export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
     </BidModal>
   );
 }
+
+const mappings = {
+  Male: {
+    Single: "bg-cyan-950 outline-orange-400",
+    Double: "bg-orange-950 outline-cyan-400",
+  },
+  Female: {
+    Single: "bg-fuchsia-950 outline-cyan-400",
+  },
+};
