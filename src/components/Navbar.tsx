@@ -45,9 +45,10 @@ const Navbar: React.FC = () => {
                   <AvatarFallback>VC</AvatarFallback>
                 </Avatar>
                 <div className="space-y-1">
-                  <h4 className="text-sm font-semibold">@nextjs</h4>
+                  <h4 className="text-sm font-semibold">@chuahziyang</h4>
                   <p className="text-sm">
-                    The React Framework – created and maintained by @vercel.
+                    Raffles Room Bidding App – created and maintained by
+                    @rhdevs.
                   </p>
                   <div className="flex items-center pt-2">
                     <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "}
