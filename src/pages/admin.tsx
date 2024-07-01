@@ -20,17 +20,24 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
+import { api } from "~/utils/api";
 
 export default function Component() {
+  const { isSuccess, data } = api.user.getAllUsers.useQuery();
+
+  if (!isSuccess) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="flex min-h-screen w-full">
       <div className="flex flex-col w-full">
         <main className="flex-1 p-6 w-full">
           <div className="grid gap-6">
             <div className="grid gap-2">
-              <h1 className="text-2xl font-bold">Welcome back, John!</h1>
+              <h1 className="text-2xl font-bold">Welcome back, Admin!</h1>
               <p className="text-muted-foreground">
-                Here's a quick overview of your account.
+                Here's a quick overview of this current room bidding exercise
               </p>
             </div>
             {/* <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 w-full">
@@ -105,188 +112,58 @@ export default function Component() {
                     <TableRow>
                       <TableHead>Name</TableHead>
                       <TableHead>Email</TableHead>
-                      <TableHead>Role</TableHead>
-                      <TableHead>Last Login</TableHead>
+                      <TableHead>Points</TableHead>
                       <TableHead>Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    <TableRow>
-                      <TableCell>John Doe</TableCell>
-                      <TableCell>john@example.com</TableCell>
-                      <TableCell>Admin</TableCell>
-                      <TableCell>2023-04-01 10:30 AM</TableCell>
-                      <TableCell>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <MailPlusIcon className="h-4 w-4" />
-                                <span className="sr-only">
+                    {data.map((user) => {
+                      return (
+                        <TableRow>
+                          <TableCell>{user.name}</TableCell>
+                          <TableCell>{user.matricNumber}</TableCell>
+                          <TableCell>{user.points}</TableCell>
+                          <TableCell>
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    aria-haspopup="true"
+                                    size="icon"
+                                    variant="ghost"
+                                  >
+                                    <MailPlusIcon className="h-4 w-4" />
+                                    <span className="sr-only">
+                                      Send Signin Email To User
+                                    </span>
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
                                   Send Signin Email To User
-                                </span>
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              Send Signin Email To User
-                            </TooltipContent>
-                          </Tooltip>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <RefreshCwIcon className="h-4 w-4" />
-                                <span className="sr-only">
+                                </TooltipContent>
+                              </Tooltip>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    aria-haspopup="true"
+                                    size="icon"
+                                    variant="ghost"
+                                  >
+                                    <RefreshCwIcon className="h-4 w-4" />
+                                    <span className="sr-only">
+                                      Reset Bids for this User
+                                    </span>
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
                                   Reset Bids for this User
-                                </span>
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              Reset Bids for this User
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Jane Smith</TableCell>
-                      <TableCell>jane@example.com</TableCell>
-                      <TableCell>User</TableCell>
-                      <TableCell>2023-03-28 3:45 PM</TableCell>
-                      <TableCell>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <MailPlusIcon className="h-4 w-4" />
-                                <span className="sr-only">
-                                  Send Signin Email To User
-                                </span>
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              Send Signin Email To User
-                            </TooltipContent>
-                          </Tooltip>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <RefreshCwIcon className="h-4 w-4" />
-                                <span className="sr-only">
-                                  Reset Bids for this User
-                                </span>
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              Reset Bids for this User
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Bob Johnson</TableCell>
-                      <TableCell>bob@example.com</TableCell>
-                      <TableCell>User</TableCell>
-                      <TableCell>2023-03-25 9:15 AM</TableCell>
-                      <TableCell>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <MailPlusIcon className="h-4 w-4" />
-                                <span className="sr-only">
-                                  Send Signin Email To User
-                                </span>
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              Send Signin Email To User
-                            </TooltipContent>
-                          </Tooltip>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <RefreshCwIcon className="h-4 w-4" />
-                                <span className="sr-only">
-                                  Reset Bids for this User
-                                </span>
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              Reset Bids for this User
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Alice Williams</TableCell>
-                      <TableCell>alice@example.com</TableCell>
-                      <TableCell>User</TableCell>
-                      <TableCell>2023-03-22 2:00 PM</TableCell>
-                      <TableCell>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <MailPlusIcon className="h-4 w-4" />
-                                <span className="sr-only">
-                                  Send Signin Email To User
-                                </span>
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              Send Signin Email To User
-                            </TooltipContent>
-                          </Tooltip>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <RefreshCwIcon className="h-4 w-4" />
-                                <span className="sr-only">
-                                  Reset Bids for this User
-                                </span>
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              Reset Bids for this User
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableCell>
-                    </TableRow>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               </CardContent>

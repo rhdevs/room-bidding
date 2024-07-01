@@ -43,6 +43,16 @@ export const userRouter = createTRPCRouter({
     });
   }),
 
+  resetBids: publicProcedure
+    .input(z.number())
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.bid.deleteMany({
+        where: {
+          userId: input,
+        },
+      });
+    }),
+
   bidForRoom: publicProcedure
     .input(
       z.object({
