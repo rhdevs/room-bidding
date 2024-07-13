@@ -1,6 +1,6 @@
 import { Avatar } from "@radix-ui/react-avatar";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { RouterOutputs, api } from "~/utils/api";
+import { type RouterOutputs, api } from "~/utils/api";
 import { getString } from "./RoomCard";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import {
@@ -106,11 +106,11 @@ const BidModal: React.FC<BidModalProps> = ({
                 ></RoomModal>
               </CarouselItem>
             </CarouselContent>
-            <CarouselPrevious className="absolute left-[-80px] top-1/2 -translate-y-1/2 z-10">
+            <CarouselPrevious className="absolute left-[-80px] top-1/2 z-10 -translate-y-1/2">
               <ChevronLeftIcon className="h-6 w-6" />
               <span className="sr-only">Previous</span>
             </CarouselPrevious>
-            <CarouselNext className="absolute right-[-80px] top-1/2 -translate-y-1/2 z-10">
+            <CarouselNext className="absolute right-[-80px] top-1/2 z-10 -translate-y-1/2">
               <ChevronRightIcon className="h-6 w-6" />
               <span className="sr-only">Next</span>
             </CarouselNext>
@@ -171,7 +171,7 @@ const RoomModal = ({
           <CardHeader>
             <CardTitle>Current Bids</CardTitle>
           </CardHeader>
-          <CardContent className="grid gap-4 max-h-[300px] overflow-auto">
+          <CardContent className="grid max-h-[300px] gap-4 overflow-auto">
             {fullRoom.isSuccess ? (
               fullRoom.data.length != 0 ? (
                 fullRoom.data.map((bid, index) => {
@@ -227,7 +227,7 @@ function CurrentBidRow(
   return (
     <div className="flex items-center justify-between" key={index}>
       <div className="flex items-center gap-4">
-        <Avatar className="border w-8 h-8">
+        <Avatar className="h-8 w-8 border">
           <img src="/placeholder.svg" alt="Avatar" />
         </Avatar>
         <div>

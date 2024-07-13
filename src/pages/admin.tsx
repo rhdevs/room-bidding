@@ -20,6 +20,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
+import { toast } from "~/components/ui/use-toast";
 import { api } from "~/utils/api";
 
 export default function Component() {
@@ -154,7 +155,16 @@ export default function Component() {
                                     aria-haspopup="true"
                                     size="icon"
                                     variant="ghost"
-                                    onClick={() => resetBids.mutate(user.id)}
+                                    onClick={() =>
+                                      resetBids.mutate(user.id, {
+                                        onSuccess: () => {
+                                          toast({
+                                            title: "Successfully Reset Bids!",
+                                            description: `Resetting Bids for ${user.name}`,
+                                          });
+                                        },
+                                      })
+                                    }
                                   >
                                     <RefreshCwIcon className="h-4 w-4" />
                                     <span className="sr-only">
