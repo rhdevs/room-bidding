@@ -89,101 +89,96 @@ const QueuePage: React.FC = () => {
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
-          {data &&
-            data.map((bid) => {
-              return (
-                <TableBody>
-                  <TableRow>
-                    {/* <TableCell className="hidden sm:table-cell"> */}
-                    {/* <Image
+          {data?.map((bid) => {
+            return (
+              <TableBody>
+                <TableRow>
+                  {/* <TableCell className="hidden sm:table-cell"> */}
+                  {/* <Image
                   alt="Product image"
                   className="aspect-square rounded-md object-cover"
                   height="64"
                   src="/placeholder.svg"
                   width="64"
                 /> */}
-                    {/* </TableCell> */}
-                    <TableCell className="font-medium">
-                      {getString(bid.room)}
-                    </TableCell>
-                    <TableCell>
-                    {badgeMapping[bid.room.roomType]}
-                    </TableCell>
-                    <TableCell>
-                      {bid.user.points}
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      Nicholas
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      {bid.rank}
-                    </TableCell>
-                    <TableCell>
-                      <TooltipProvider delayDuration={150}>
-                        <div className="flex flex-row">
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                // disabled={!mail}
-                              >
-                                <ArrowUp
-                                  className="cursor-pointer"
-                                  onClick={() => increaseP(bid.id)}
-                                />
-                                <span className="sr-only">Rank Higher</span>
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>Rank Higher</TooltipContent>
-                          </Tooltip>
-                          <Separator
-                            orientation="vertical"
-                            className="mx-1 h-10"
-                          />
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                // disabled={!mail}
-                              >
-                                <ArrowDown
-                                  className="cursor-pointer"
-                                  onClick={() => decreaseP(bid.id)}
-                                />
-                                <span className="sr-only">Rank Lower</span>
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>Rank Lower</TooltipContent>
-                          </Tooltip>
-                          <Separator
-                            orientation="vertical"
-                            className="mx-1 h-10"
-                          />
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                // disabled={!mail}
-                              >
-                                <X
-                                  className="cursor-pointer"
-                                  onClick={() => biddelete(bid.id)}
-                                />
-                                <span className="sr-only">Delete Bid</span>
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>Delete Bid</TooltipContent>
-                          </Tooltip>
-                        </div>
-                      </TooltipProvider>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              );
-            })}
+                  {/* </TableCell> */}
+                  <TableCell className="font-medium">
+                    {getString(bid.room)}
+                  </TableCell>
+                  <TableCell>{badgeMapping[bid.room.roomType]}</TableCell>
+                  <TableCell>{bid.user.points}</TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    Nicholas
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {bid.rank}
+                  </TableCell>
+                  <TableCell>
+                    <TooltipProvider delayDuration={150}>
+                      <div className="flex flex-row">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              // disabled={!mail}
+                            >
+                              <ArrowUp
+                                className="cursor-pointer"
+                                onClick={() => increaseP(bid.id)}
+                              />
+                              <span className="sr-only">Rank Higher</span>
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Rank Higher</TooltipContent>
+                        </Tooltip>
+                        <Separator
+                          orientation="vertical"
+                          className="mx-1 h-10"
+                        />
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              // disabled={!mail}
+                            >
+                              <ArrowDown
+                                className="cursor-pointer"
+                                onClick={() => decreaseP(bid.id)}
+                              />
+                              <span className="sr-only">Rank Lower</span>
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Rank Lower</TooltipContent>
+                        </Tooltip>
+                        <Separator
+                          orientation="vertical"
+                          className="mx-1 h-10"
+                        />
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              // disabled={!mail}
+                            >
+                              <X
+                                className="cursor-pointer"
+                                onClick={() => biddelete(bid.id)}
+                              />
+                              <span className="sr-only">Delete Bid</span>
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Delete Bid</TooltipContent>
+                        </Tooltip>
+                      </div>
+                    </TooltipProvider>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            );
+          })}
         </Table>
       </CardContent>
       <CardFooter>
@@ -196,10 +191,20 @@ const QueuePage: React.FC = () => {
 };
 export default QueuePage;
 
-
 const badgeMapping = {
-  Single: <Badge variant="outline" className="bg-blue-500">Single</Badge>,
-  Double: <Badge variant="outline" className="bg-green-500" >Double</Badge>,
-  SuperSingle: <Badge variant="outline" className="bg-sky-200">SuperSingle</Badge>,
-}
-
+  Single: (
+    <Badge variant="outline" className="bg-blue-500">
+      Single
+    </Badge>
+  ),
+  Double: (
+    <Badge variant="outline" className="bg-green-500">
+      Double
+    </Badge>
+  ),
+  SuperSingle: (
+    <Badge variant="outline" className="bg-sky-200">
+      SuperSingle
+    </Badge>
+  ),
+};
