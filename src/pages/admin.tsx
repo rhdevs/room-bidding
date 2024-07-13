@@ -25,14 +25,17 @@ import { api } from "~/utils/api";
 export default function Component() {
   const { isSuccess, data } = api.user.getAllUsers.useQuery();
 
+  const sendEmail = api.email.sendEmailtoUser.useMutation();
+  const resetBids = api.user.resetBids.useMutation();
+
   if (!isSuccess) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="flex min-h-screen w-full">
-      <div className="flex flex-col w-full">
-        <main className="flex-1 p-6 w-full">
+      <div className="flex w-full flex-col">
+        <main className="w-full flex-1 p-6">
           <div className="grid gap-6">
             <div className="grid gap-2">
               <h1 className="text-2xl font-bold">Welcome back, Admin!</h1>
@@ -131,6 +134,9 @@ export default function Component() {
                                     aria-haspopup="true"
                                     size="icon"
                                     variant="ghost"
+                                    onClick={() =>
+                                      sendEmail.mutate(user.nusNetId)
+                                    }
                                   >
                                     <MailPlusIcon className="h-4 w-4" />
                                     <span className="sr-only">
@@ -148,6 +154,7 @@ export default function Component() {
                                     aria-haspopup="true"
                                     size="icon"
                                     variant="ghost"
+                                    onClick={() => resetBids.mutate(user.id)}
                                   >
                                     <RefreshCwIcon className="h-4 w-4" />
                                     <span className="sr-only">

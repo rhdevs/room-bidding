@@ -1,7 +1,7 @@
-import { Block } from "@prisma/client";
+import { type Block } from "@prisma/client";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
-import { RouterOutputs } from "~/utils/api";
+import { type RouterOutputs } from "~/utils/api";
 import { generateUUID } from "~/utils/uuid";
 import BidModal from "./BidModal";
 type Room = RouterOutputs["room"]["getRoom"];
@@ -59,7 +59,7 @@ export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
       key={room?.id}
     >
       <Button
-        className={`${mappings[room?.gender]?.Single} outline outline-offset-2 outline-[2px] flex h-16 min-h-[64px] w-20 min-w-[80px] flex-col px-2 py-1 text-xs`}
+        className={`${mappings[room?.gender]?.Single} flex h-16 min-h-[64px] w-20 min-w-[80px] flex-col px-2 py-1 text-xs outline outline-[2px] outline-offset-2`}
         // disabled={room?.occupant ? true : false}
         onClick={() => setIsDialogOpen(true)}
       >
