@@ -52,17 +52,25 @@ const femaleSingle = {
   occupant: null,
 };
 const BlockThree: React.FC = () => {
-  const { data: rooms } = api.room.listRooms.useQuery();
+  const { data: rooms } = api.room.listRoomsByBlock.useQuery("B3");
   // display columns of rooms
+  console.log(rooms);
+  
+  const roomsset = new Map<string, NonNullable<Room>>();
+
+  for (const room of rooms) {
+    roomsset.set(generateUUID(room.block, room.unit, room.index), room);
+  }
+
   return (
     <div className="flex gap-x-5 p-4">
       {/* Left column */}
       <div className="flex min-w-max gap-x-4">
         <div className="flex flex-col gap-y-1">
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
           <div className="h-full" />
           <LevelCard level="3.5" />
         </div>
@@ -70,17 +78,17 @@ const BlockThree: React.FC = () => {
           <div className="h-full" />
           <Toilet gender="Female" />
           <Stairs />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
           <LevelCard level="3" />
         </div>
         <div className="flex flex-col gap-y-1">
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
           <div className="h-full" />
           <LevelCard level="2.5" />
         </div>
@@ -88,17 +96,17 @@ const BlockThree: React.FC = () => {
           <div className="h-full" />
           <Toilet gender="Female" />
           <Stairs />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
           <LevelCard level="2" />
         </div>
         <div className="flex flex-col gap-y-1">
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
           <div className="h-full" />
           <LevelCard level="1.5" />
         </div>
@@ -106,10 +114,10 @@ const BlockThree: React.FC = () => {
           <div className="h-full" />
           <Toilet gender="Male" />
           <Stairs />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
-          <RoomCard rooms={rooms} roomNumber="3-XYZ" />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
+          <RoomCard block="B3" unit={301} key={301} roomset={roomsset} />
           <LevelCard level="1" />
         </div>
       </div>

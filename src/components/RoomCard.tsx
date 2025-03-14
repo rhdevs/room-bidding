@@ -59,8 +59,7 @@ export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
       key={room?.id}
     >
       <Button
-        className={`${mappings[room?.gender]?.Single} flex h-16 min-h-[64px] w-20 min-w-[80px] flex-col px-2 py-1 text-xs outline outline-[2px] outline-offset-2`}
-        // disabled={room?.occupant ? true : false}
+        className={`flex h-16 min-h-[64px] w-20 min-w-[80px] flex-col px-2 py-1 text-xs outline outline-[2px] outline-offset-2`}
         onClick={() => setIsDialogOpen(true)}
       >
         <span className="text-sm">{room.unit}</span>
@@ -72,12 +71,12 @@ export default function RoomCard({ block, unit, roomset }: RoomCardProps) {
   );
 }
 
-const mappings = {
-  Male: {
-    Single: "bg-cyan-950 outline-orange-400",
-    Double: "bg-orange-950 outline-cyan-400",
-  },
-  Female: {
-    Single: "bg-fuchsia-950 outline-cyan-400",
-  },
-};
+//const mappings = {
+//  Male: {
+//    Single: "bg-cyan-950 outline-orange-400",
+//    Double: "bg-orange-950 outline-cyan-400",
+//  },
+//  Female: {
+//    Single: "bg-fuchsia-950 outline-cyan-400",
+//  },
+//};

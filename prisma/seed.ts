@@ -47,52 +47,49 @@ async function seedUsers() {
     },
   });
 }
-const rooms = [
+
+
+const BLK2_rooms = [
   {
     block: "B2",
     unit: 101,
-    gender: "Male",
     index: 1,
     type: "Double",
   },
   {
-    block: "B2",
     unit: 101,
-    gender: "Male",
     index: 2,
     type: "Double",
   },
   {
-    block: "B2",
     unit: 102,
-    gender: "Male",
     index: 1,
     type: "Single",
   },
   {
-    block: "B2",
     unit: 103,
-    gender: "Male",
     index: 1,
     type: "Single",
   },
   {
-    block: "B2",
     unit: 104,
-    gender: "Male",
     index: 1,
     type: "Single",
   },
   {
-    block: "B2",
     unit: 105,
-    gender: "Male",
     index: 1,
     type: "Single",
-  },
-] as const;
+  }
+].map((x) => {
+  return {
+  ...x,
+    block: "B2",
+    gender: "Male"
+  }
+})
 
-const processedRooms = rooms.map((x) => {
+const processedRooms = BLK2_rooms.map((x) => {
   return {
     id: generateUUID(x.block, x.unit, x.index),
     block: x.block,
