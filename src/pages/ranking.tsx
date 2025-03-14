@@ -44,7 +44,7 @@ const QueuePage: React.FC = () => {
     deleteBid.mutate(id, {
       onSuccess: () => {
         console.log("success");
-        utils.user.getBids.invalidate();
+        void utils.user.getBids.invalidate();
       },
     });
   };
@@ -52,7 +52,7 @@ const QueuePage: React.FC = () => {
     increasePriority.mutate(id, {
       onSuccess: () => {
         console.log("success");
-        utils.user.getBids.invalidate();
+        void utils.user.getBids.invalidate();
       },
     });
   };
@@ -61,7 +61,7 @@ const QueuePage: React.FC = () => {
     await decreasePriority.mutateAsync(id, {
       onSuccess: () => {
         console.log("success");
-        utils.user.getBids.invalidate();
+        void utils.user.getBids.invalidate();
       },
     });
   };
