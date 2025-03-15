@@ -1,4 +1,4 @@
-import { PrismaClient, Room } from "@prisma/client";
+import { PrismaClient, type Room } from "@prisma/client";
 import { generateUUID } from "~/utils/uuid";
 const prisma = new PrismaClient();
 
