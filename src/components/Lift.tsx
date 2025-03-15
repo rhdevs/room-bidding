@@ -1,6 +1,6 @@
 import { Button } from "~/components/ui/button";
 import { twMerge } from "tailwind-merge";
-import { withClassname } from "./Stairs";
+import { type withClassname } from "./Stairs";
 
 const Lift: React.FC<withClassname> = ({ className }) => {
   return (

@@ -1,6 +1,6 @@
 import { Button } from "~/components/ui/button";
 import { twMerge } from "tailwind-merge";
-import { withClassname } from "./Stairs";
+import { type withClassname } from "./Stairs";
 
 const Pantry: React.FC<withClassname> = ({ className }) => {
   return (

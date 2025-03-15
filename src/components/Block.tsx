@@ -1,4 +1,4 @@
-import { RouterOutputs } from "~/utils/api";
+import { type RouterOutputs } from "~/utils/api";
 import BlockTwo from "./BlockTwo";
 import BlockThree from "./BlockThree";
 import BlockThreeA from "./BlockThreeA";

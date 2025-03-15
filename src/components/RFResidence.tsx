@@ -1,5 +1,5 @@
 import { Button } from "~/components/ui/button";
-import { withClassname } from "~/components/Stairs";
+import { type withClassname } from "~/components/Stairs";
 import { twMerge } from "tailwind-merge";
 
 const RFResidence: React.FC<withClassname> = ({ className }) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import RoomCard from "~/components/RoomCard";
-import { RouterOutputs, api } from "~/utils/api";
+import { type RouterOutputs, api } from "~/utils/api";
 import { generateUUID } from "~/utils/uuid";
 import GrassPatch from "./GrassPatch";
 import LevelCard from "./LevelCard";

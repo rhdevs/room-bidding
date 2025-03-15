@@ -1,4 +1,4 @@
-import { Block } from "@prisma/client";
+import { type Block } from "@prisma/client";
 import { z } from "zod";
 import { generateUUID } from "~/utils/uuid";
 

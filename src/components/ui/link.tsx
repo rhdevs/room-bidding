@@ -1,8 +1,8 @@
 "use client";
 
-import Link, { LinkProps } from "next/link";
+import Link, { type LinkProps } from "next/link";
 import { useSearchParams } from "next/navigation";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 interface LinkWithQPProps extends LinkProps {
   children?: ReactNode;

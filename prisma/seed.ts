@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Room } from "@prisma/client";
 import { generateUUID } from "~/utils/uuid";
 const prisma = new PrismaClient();
 
@@ -51,58 +51,66 @@ async function seedUsers() {
 
 const BLK2_rooms = [
   {
-    block: "B2",
     unit: 101,
     index: 1,
-    type: "Double",
+    roomType: "Double",
   },
   {
     unit: 101,
     index: 2,
-    type: "Double",
+    roomType: "Double",
   },
   {
     unit: 102,
     index: 1,
-    type: "Single",
+    roomType: "Single",
   },
   {
     unit: 103,
     index: 1,
-    type: "Single",
+    roomType: "Single",
   },
   {
     unit: 104,
     index: 1,
-    type: "Single",
+    roomType: "Single",
   },
   {
     unit: 105,
     index: 1,
-    type: "Single",
+    roomType: "Single",
   }
 ].map((x) => {
   return {
   ...x,
     block: "B2",
-    gender: "Male"
-  }
+    gender: "Male",
+    id: generateUUID("B2", x.unit, x.index),
+  } as Room;
 })
 
-const processedRooms = BLK2_rooms.map((x) => {
+const BLK3_rooms = [
+  {
+    unit: 301,
+    index: 1,
+    roomType: "Single",
+  }].map((x) => {
   return {
-    id: generateUUID(x.block, x.unit, x.index),
-    block: x.block,
-    unit: x.unit,
-    gender: x.gender,
-    index: x.index,
-    roomType: x.type,
-  };
-});
+  ...x,
+    block: "B3",
+    gender: "Male",
+    id: generateUUID("B2", x.unit, x.index),
+  } as Room;
+})
+
 
 async function seedRooms() {
   await prisma.room.createMany({
-    data: processedRooms,
+    data: BLK2_rooms,
+  });
+
+  await prisma.room.createMany({
+    data: BLK3_rooms,
   });
 }
 

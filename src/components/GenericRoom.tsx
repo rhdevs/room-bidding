@@ -1,6 +1,6 @@
 import { Button } from "~/components/ui/button";
 import { twMerge } from "tailwind-merge";
-import { withClassname } from "./Stairs";
+import { type withClassname } from "./Stairs";
 
 export interface genericRoomProp extends withClassname {
   roomName: string;
