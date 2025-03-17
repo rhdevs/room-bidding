@@ -1,6 +1,7 @@
 import { Avatar } from "@radix-ui/react-avatar";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import React, { type ReactNode } from "react";
+import { useUser } from "../hooks/useUser";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -42,12 +43,17 @@ const BidModal: React.FC<BidModalProps> = ({
   setIsDialogOpen,
 }) => {
   const bidRoom = api.user.bidForRoom.useMutation();
+
+  const { data, isSuccess } = useUser();
+
+  if (!isSuccess) return <div>Loading...</div>;
+
   const handleSubmitBid = async (room: Room) => {
     if (!room) return;
 
     bidRoom.mutate(
       {
-        userId: 1,
+        userId: data!.id,
         roomId: room.id ?? "",
       },
       {

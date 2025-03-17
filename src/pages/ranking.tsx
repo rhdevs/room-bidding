@@ -29,9 +29,12 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 
-const QueuePage: React.FC = () => {
+const QueuePage: React.FC = (props) => {
+  
+  //@ts-ignore
+  const {userid} = props
   const { data, isSuccess, isLoading, isFetching } =
-    api.user.getBids.useQuery(1);
+    api.user.getBids.useQuery(userid);
   const increasePriority = api.bid.increasePriority.useMutation();
   const decreasePriority = api.bid.decreasePriority.useMutation();
   const deleteBid = api.bid.deleteBid.useMutation();
