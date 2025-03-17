@@ -13,7 +13,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
       <Navbar />
-      <Component {...pageProps } userid={data!.id} />
+      <Component {...pageProps } userid={data?.id || -1} />
       <Toaster />
     </>
   );
