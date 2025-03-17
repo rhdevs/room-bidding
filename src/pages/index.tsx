@@ -23,24 +23,22 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl bg-muted-foreground/10 p-4 text-primary hover:bg-muted-foreground/20"
-              href="/queue"
+              href="/room"
               target="_blank"
             >
-              <h3 className="text-2xl font-bold">Queue→</h3>
+              <h3 className="text-2xl font-bold">View Rooms→</h3>
               <div className="text-lg">
-                View the queue right now to see when who's turn it is to bid a
-                room.
+                View all the available rooms and bid for them
               </div>
             </Link>
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl bg-muted-foreground/10 p-4 text-primary hover:bg-muted-foreground/20"
-              href="/bid"
+              href="/ranking"
               target="_blank"
             >
-              <h3 className="text-2xl font-bold">Bid your room→</h3>
+              <h3 className="text-2xl font-bold">Rank Room→</h3>
               <div className="text-lg">
-                Bid for a room and get a room of your choice. Enjoy the fruits
-                of your labour in the past year.
+                Rank the rooms and get the best room for you
               </div>
             </Link>
           </div>

@@ -7,6 +7,8 @@ import { env } from "./../../../env";
 const resend = new Resend(env.RESEND_API_KEY);
 
 const initialMessage = async (id: string) => {
+  console.log("asdasd")
+  console.log(hashandSlice(id));
   return await resend.emails.create({
     from: "Acme <onboarding@resend.dev>",
     // to: [`${id}@u.nus.edu`],

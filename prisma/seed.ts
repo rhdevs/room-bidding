@@ -6,7 +6,7 @@ async function seedUsers() {
   await prisma.user.create({
     data: {
       gender: "Male",
-      name: "Chuah Zi Yang",
+      name: "John Doe",
       points: 100,
       matricNumber: "e1123255",
       nusNetId: "A0273852X",
@@ -17,7 +17,7 @@ async function seedUsers() {
   await prisma.user.create({
     data: {
       gender: "Male",
-      name: "John Person 1",
+      name: "Alexander Tan",
       points: 119,
       matricNumber: "e1123256",
       nusNetId: "A0273853X",
@@ -28,7 +28,7 @@ async function seedUsers() {
   await prisma.user.create({
     data: {
       gender: "Male",
-      name: "John Person 2",
+      name: "Benjamin Kheng",
       points: 123,
       matricNumber: "e1123257",
       nusNetId: "A0273854X",
@@ -39,7 +39,7 @@ async function seedUsers() {
   await prisma.user.create({
     data: {
       gender: "Male",
-      name: "John Person 3",
+      name: "Tommy Lee",
       points: 112,
       matricNumber: "e1123258",
       nusNetId: "A0273855X",
