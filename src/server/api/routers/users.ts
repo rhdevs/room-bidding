@@ -88,7 +88,13 @@ export const userRouter = createTRPCRouter({
         throw new Error("Wrong Gender");
       }
 
-      const rank = (await ctx.db.bid.count()) + 1;
+      const currentBids = await ctx.db.bid.findMany({
+        where: {
+          userId: input.userId,
+        },
+      });
+
+      const rank = currentBids.length + 1;
 
       return ctx.db.bid.create({
         data: {
